@@ -103,19 +103,8 @@
   </p>
 </footer>
 
-    <script>
-      
-      let file = "./storage/financeArticles.txt"
-      let reader = new FileReader(file);
-      reader.onload = function () {
-        const data = reader.result;
-        
-        console.log(data);
-      };
-      console.log(file)
-      reader.readAsText(file, "UTF-8");
-
-
+    <script src="./storage/financeArticles.js">
+      console.log(articles);
     </script>
     
   </body>
