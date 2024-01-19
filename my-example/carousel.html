@@ -191,13 +191,13 @@
       const data = [{
         id: 1,
         title: "제목1",
-        text: "some people .." ,
-        link: ""
+        link: "",
+        text: "some people .." 
       },{
         id: 2,
         title: "제목2",
-        text: "some people .." ,
-        link: ""
+        link: "",
+        desc: "some people .." 
       }]
       let html = ''
       
@@ -207,7 +207,7 @@
 
           <h2 id="heading">${value.title}</h2>
           <p id="summary">${value.text}</p>
-          <p><a class="btn btn-secondary" href="./blog.html">View details &raquo;</a></p>
+          <p><a class="btn btn-secondary" href="./blog.html?articleId=${value.id}">View details &raquo;</a></p>
         </div>`
        html += content
       })
