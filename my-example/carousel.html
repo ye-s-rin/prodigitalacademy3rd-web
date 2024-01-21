@@ -187,29 +187,19 @@
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="./storage/financeArticles.js"></script>
     <script>
-      const data = [{
-        id: 1,
-        title: "제목1",
-        link: "",
-        text: "some people .." 
-      },{
-        id: 2,
-        title: "제목2",
-        link: "",
-        desc: "some people .." 
-      }]
-      let html = ''
+      let html = '';
       
-      data.forEach((value, idx)=>{
+      articles.forEach((value, idx)=>{
         const content = `<div class="col-lg-4" id="article">
           <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
 
           <h2 id="heading">${value.title}</h2>
           <p id="summary">${value.text}</p>
           <p><a class="btn btn-secondary" href="./blog.html?articleId=${value.id}">View details &raquo;</a></p>
-        </div>`
-       html += content
+        </div>`;
+       html += content;
       })
 
       document.getElementById("articles").innerHTML=html;

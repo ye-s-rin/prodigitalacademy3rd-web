@@ -63,7 +63,7 @@
   <div class="row g-5">
     <div class="col-md-8">
       <h3 class="pb-4 mb-4 fst-italic border-bottom">
-        From the Naver
+        From the Naver News
       </h3>
 
       <article class="blog-post">
@@ -71,6 +71,8 @@
         <p class="blog-post-meta" id="date">January 1, 2021 by Mark</p>
 
         <p id="text">This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.</p>
+        
+        <p class="blog-post-meta" id="journalist">journalist's name</p>
       </article>
 
       <nav class="blog-pagination" aria-label="Pagination">
@@ -103,8 +105,16 @@
   </p>
 </footer>
 
-    <script src="./storage/financeArticles.js">
+    <script src="./storage/financeArticles.js"></script>
+    <script> // 파일이 로드가 된 후 객체 가져오기
       console.log(articles);
+
+      document.getElementById("title").innerHTML=articles[0].title;
+      document.getElementById("journalist").innerHTML=articles[0].journalist+" 기자";
+      document.getElementById("date").innerHTML=articles[0].date;
+      document.getElementById("text").innerHTML=articles[0].text;
+      document.getElementById("link").href=articles[0].link;
+
     </script>
     
   </body>
