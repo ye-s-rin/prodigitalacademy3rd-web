@@ -106,14 +106,15 @@
 </footer>
 
     <script src="./storage/financeArticles.js"></script>
-    <script> // 파일이 로드가 된 후 객체 가져오기
-      console.log(articles);
+    <script>
+      let id=new URLSearchParams(window.location.search).get('id');
+      console.log(id);
 
-      document.getElementById("title").innerHTML=articles[0].title;
-      document.getElementById("journalist").innerHTML=articles[0].journalist+" 기자";
-      document.getElementById("date").innerHTML=articles[0].date;
-      document.getElementById("text").innerHTML=articles[0].text;
-      document.getElementById("link").href=articles[0].link;
+      document.getElementById("title").innerHTML=articles[id].title;
+      document.getElementById("journalist").innerHTML=articles[id].journalist+" 기자";
+      document.getElementById("date").innerHTML=articles[id].date;
+      document.getElementById("text").innerHTML=articles[id].text;
+      document.getElementById("link").href=articles[id].link;
 
     </script>
     
