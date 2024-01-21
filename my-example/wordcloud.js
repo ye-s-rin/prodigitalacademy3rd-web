@@ -5,12 +5,8 @@ let words = getWordsFromArticles();
 
 // 워드 클라우드 생성 함수
 function createWordCloud(words) {
-  // 동적으로 상위 태그의 크기를 계산
-  let width = Math.min(window.innerWidth, document.getElementById('wordCloud').offsetWidth);
-  let height = Math.min(window.innerHeight, document.getElementById('wordCloud').offsetHeight);
-
   let layout = d3.layout.cloud()
-    .size([width, height])
+    .size([800, 400])
     .words(words)
     .padding(5)
     .rotate(function() { return ~~(Math.random() * 2) * 90; })
@@ -21,10 +17,14 @@ function createWordCloud(words) {
   layout.start();
 
   function draw(words) {
+    // 워드 클라우드 컨테이너의 가로, 세로 크기
+    let containerWidth = layout.size()[0];
+    let containerHeight = layout.size()[1];
+
     // SVG를 생성하고 가운데로 이동
     let svg = d3.select("#wordCloud").append("svg")
-      .attr("width", layout.size()[0])
-      .attr("height", layout.size()[1])
+      .attr("width", containerWidth)
+      .attr("height", containerHeight)
       .append("g")
       .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
 
