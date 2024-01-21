@@ -53,7 +53,10 @@ body {
 }
 
 #wordCloud {
+  display: flex; /* 또는 display: grid; */
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* 부모 요소에 대한 상대적인 크기 설정 */
+  height: auto; /* 높이를 자동으로 조절하여 비율 유지 */
   text-align: center;
-  margin-top: 50px;
-  box-sizing: content-box;
 }

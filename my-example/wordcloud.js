@@ -6,25 +6,21 @@ let words = getWordsFromArticles();
 // 워드 클라우드 생성 함수
 function createWordCloud(words) {
   let layout = d3.layout.cloud()
-    .size([800, 400])
+    .size([640, 300])
     .words(words)
     .padding(5)
-    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .rotate(function () { return ~~(Math.random() * 2) * 90; })
     .font("Impact")
-    .fontSize(function(d) { return d.size; })
+    .fontSize(function (d) { return d.size; })
     .on("end", draw);
 
   layout.start();
 
   function draw(words) {
-    // 워드 클라우드 컨테이너의 가로, 세로 크기
-    let containerWidth = layout.size()[0];
-    let containerHeight = layout.size()[1];
-
     // SVG를 생성하고 가운데로 이동
     let svg = d3.select("#wordCloud").append("svg")
-      .attr("width", containerWidth)
-      .attr("height", containerHeight)
+      .attr("width", layout.size()[0])
+      .attr("height", layout.size()[1])
       .append("g")
       .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")");
 
@@ -35,14 +31,14 @@ function createWordCloud(words) {
     svg.selectAll("text")
       .data(words)
       .enter().append("text")
-      .style("font-size", function(d) { return d.size + "px"; })
+      .style("font-size", function (d) { return d.size + "px"; })
       .style("font-family", "Impact")
-      .style("fill", function(d, i) { return colorScale(i); })  // 색상 체계 적용
+      .style("fill", function (d, i) { return colorScale(i); })  // 색상 체계 적용
       .attr("text-anchor", "middle")
-      .attr("transform", function(d) {
+      .attr("transform", function (d) {
         return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
       })
-      .text(function(d) { return d.text; });
+      .text(function (d) { return d.text; });
   }
 }
 
@@ -52,11 +48,11 @@ function getWordsFromArticles() {
   let allWords = allTexts.join(' ').split(/\s+/);
 
   let wordCounts = {};
-  allWords.forEach(function(word) {
+  allWords.forEach(function (word) {
     wordCounts[word] = (wordCounts[word] || 0) + 1;
   });
 
-  let words = Object.keys(wordCounts).map(function(word) {
+  let words = Object.keys(wordCounts).map(function (word) {
     return { text: word, size: wordCounts[word] * 10 }; // 단어의 크기를 빈도에 따라 조절
   });
 
