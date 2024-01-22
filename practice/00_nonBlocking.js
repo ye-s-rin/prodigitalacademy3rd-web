@@ -6,7 +6,7 @@ console.log('시작');
 setTimeout(run, 3000);
 console.log('끝');
 /**
-> node .\practice.js
+> node .\00_nonBlocking.js
 시작
 끝
 3초 후 실행 
