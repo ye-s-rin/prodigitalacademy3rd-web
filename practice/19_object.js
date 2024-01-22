@@ -42,3 +42,9 @@ function func1(obj) {
 }
 func1(obj2);
 // func1(obj1); // error
+
+function func2(obj) {
+    console.log(obj.nested?.city);
+}
+func2(obj2);
+func2(obj1);
