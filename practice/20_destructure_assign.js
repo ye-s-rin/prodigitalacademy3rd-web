@@ -18,3 +18,9 @@ function func2(num1, ...num2){
     console.log(num2);
 };
 func2(1, 2, 3, 4, 5,);
+
+const obj2 = {
+    ...obj1,
+    text: 'ys'
+};
+console.log(obj2);
