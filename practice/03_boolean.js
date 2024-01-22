@@ -5,8 +5,6 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-let sum = 0;
-let i = 0;
 rl.on('line', function(line){
     sum += parseInt(line);
     i++;
@@ -18,6 +16,9 @@ rl.on('line', function(line){
 rl.on('close', function() {
     console.log((sum/3)>65);
 });
+
+let sum = 0;
+let i = 0;
 /**
 > node .\03_boolean.js
 10
