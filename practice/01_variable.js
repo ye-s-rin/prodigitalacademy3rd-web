@@ -13,7 +13,7 @@ function sample2() {
     console.log(name2);
 }
 function sample3() {
-    console.log(name3);
+    console.log(name3); // undefined: 정의되지 않은 값
     if(true){
         var name3 = 3;
     }
