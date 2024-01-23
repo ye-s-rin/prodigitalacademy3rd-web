@@ -17,8 +17,6 @@ export default function Todo() {
 
   return (
     <div>
-      {/* <button onClick={focusInput}>입력하러 가기</button> */}
-
       <input
         ref={inputRef}
         type="text"
@@ -32,7 +30,6 @@ export default function Todo() {
 
       <button
         onClick={(e) => {
-          console.log(text);
           setArr([text, ...arr]);
           inputRef.current.value = "";
         }}
