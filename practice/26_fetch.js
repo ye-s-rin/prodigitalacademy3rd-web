@@ -1,11 +1,13 @@
+// 참조: fake api (https://jsonplaceholder.typicode.com/guide/)
+
 // GET
-fetch("https://jsonplaceholder.typicode.com/guide/")
+fetch("https://jsonplaceholder.typicode.com/posts/1")
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((error) => console.error("Error:", error));
 
 // POST
-fetch("https://jsonplaceholder.typicode.com/guide/", {
+fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -17,7 +19,7 @@ fetch("https://jsonplaceholder.typicode.com/guide/", {
     .catch((error) => console.error("Error:", error));
 
 // PUT
-fetch("https://jsonplaceholder.typicode.com/guide/", {
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
     method: "PUT",
     headers: {
         "Content-Type": "application/json",
@@ -34,7 +36,7 @@ fetch("https://jsonplaceholder.typicode.com/guide/", {
     .catch((error) => console.error("Error:", error));
 
 // DELETE
-fetch("https://jsonplaceholder.typicode.com/guide/", {
+fetch("https://jsonplaceholder.typicode.com/posts/1", {
     method: "DELETE",
 })
     .then((response) => response.json())
