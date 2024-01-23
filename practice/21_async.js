@@ -30,3 +30,9 @@ function runTasks(callback) {
 runTasks((err) => {
     console.error(err);
 });
+
+/**
+> node .\21_async.js
+fastFunction 20
+slowFunction 30
+ */
