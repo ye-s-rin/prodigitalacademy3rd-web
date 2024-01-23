@@ -33,6 +33,26 @@ Animal.prototype.eat = function () {
 animal2.eat();
 console.log(animal2);
 console.log(animal2.__proto__);
+
+// javascript의 상속은 prototype
+function Rabbit(name, color) {
+    //arguments: 함수가 가지는 특수 변수, 이자를 나타내는 유사배열
+    Animal.apply(this, arguments);
+    // Animal 함수를 적용하되 context는 this(Rabbit)
+    this.color = color;
+}
+
+// Object.create 함수는 객체는 만들되 생성장 실행X
+Rabbit.prototype = Object.create(Animal.prototype);
+Rabbit.prototype.constructor = Rabbit;
+// 생성자의 클래스의 생성자는 자기 자신
+
+const rabbit1 = new Rabbit("토끼", "white");
+
+rabbit1.run();
+rabbit1.eat();
+console.log(rabbit1);
+console.log(rabbit1.__proto__);
 /**
 > node .\24_prototype.js
 lion 동물이 달린다.
@@ -43,4 +63,8 @@ Animal { name: '사자', run: [Function (anonymous)] }
 사자가 먹는다.
 Animal { name: '사자', run: [Function (anonymous)] }
 { eat: [Function (anonymous)] }
+토끼 동물이 달린다.
+토끼가 먹는다.
+Rabbit { name: '토끼', run: [Function (anonymous)], color: 'white' }  
+Animal { constructor: [Function: Rabbit] }
  */
