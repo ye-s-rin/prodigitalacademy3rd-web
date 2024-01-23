@@ -32,7 +32,7 @@ runTasks((err) => {
 });
 
 /**
-> node .\21_async.js
+> node .\21_callback.js
 fastFunction 20
 slowFunction 30
  */
