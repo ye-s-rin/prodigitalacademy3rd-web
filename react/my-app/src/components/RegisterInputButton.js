@@ -5,6 +5,7 @@ export default function RegisterInputButton() {
   const focusInput = () => {
     inputRef.current.focus();
   };
+
   return (
     <div>
       <button onClick={focusInput}>입력하러 가기</button>

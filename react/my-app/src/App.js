@@ -1,10 +1,15 @@
 // import logo from "./logo.svg";
 // import "./App.css";
-// import HelloWorld from "./components/HelloWorld";
-// import CaptionImage from "./components/CaptionImage";
+import React from "react";
+import HelloWorld from "./components/HelloWorld";
+import CaptionImage from "./components/CaptionImage";
 import BlinkComponent from "./components/BlinkComponent";
+import CountComponent from "./components/CountComponent";
+import RegisterInputButton from "./components/RegisterInputButton";
 
 function App() {
+  const [visible, setVisible] = React.useState(true);
+
   return (
     <div className="App">
       {/* <HelloWorld /> */}
@@ -16,7 +21,10 @@ function App() {
         imgUrl="https://www-trucknbus.hyundai.com/kr/upload/metadata/MT00000053/newpowertruck-facebook.jpg"
         caption="이건 트럭입니다."
       /> */}
-      <BlinkComponent text="BlinkComponent" />
+      {/* <BlinkComponent text="BlinkComponent" /> */}
+      {/* <button onClick={() => setVisible(!visible)}>클릭</button>
+      {visible ? <CountComponent /> : null} */}
+      <RegisterInputButton />
     </div>
   );
 }
