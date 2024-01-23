@@ -6,6 +6,7 @@ import CaptionImage from "./components/CaptionImage";
 import BlinkComponent from "./components/BlinkComponent";
 import CountComponent from "./components/CountComponent";
 import RegisterInputButton from "./components/RegisterInputButton";
+import Todo from "./components/Todo";
 
 function App() {
   const [visible, setVisible] = React.useState(true);
@@ -24,7 +25,8 @@ function App() {
       {/* <BlinkComponent text="BlinkComponent" /> */}
       {/* <button onClick={() => setVisible(!visible)}>클릭</button>
       {visible ? <CountComponent /> : null} */}
-      <RegisterInputButton />
+      {/* <RegisterInputButton /> */}
+      <Todo />
     </div>
   );
 }
