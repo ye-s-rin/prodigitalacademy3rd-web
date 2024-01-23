@@ -25,3 +25,9 @@ async function runTasks() {
 }
 
 runTasks();
+/**
+> node .\23_asyncAwait.js
+Fast function done 20
+Slow function done 30
+작업완료 30
+ */
