@@ -35,3 +35,8 @@ function runTasks() {
 }
 
 runTasks();
+/**
+> node .\22_promise.js
+Fast function done 20
+Slow function d
+ */
