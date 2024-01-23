@@ -7,7 +7,7 @@ export default function CountComponent() {
     setCount(count + 1);
   };
   useEffect(() => {
-    console.log("데이터 받아오기! (이 함수는 한 번만 실행됩니다.");
+    console.log("데이터 받아오기! (이 함수는 한 번만 실행됩니다.)");
     return () => {
       console.log(
         "메모리를 잡아먹으면 리소스 해제 하는 함수를 return 해 주어야 합니다."
