@@ -1,26 +1,17 @@
 import logo from "./logo.svg";
 import "./App.css";
+import HelloWorld from "./components/HelloWorld";
+import CaptionImage from "./components/CaptionImage";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {/* Edit <code>src/App.js</code> and save to reload. */}
-          Hello 박예린
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <HelloWorld /> */}
+      <CaptionImage
+        imgUrl="https://th.bing.com/th/id/OIP.5Lj5hT2kFPf-9-R-sJGP8QHaFj?rs=1&pid=ImgDetMain"
+        caption="구름 그림"
+      />
     </div>
   );
 }
-
 export default App;
