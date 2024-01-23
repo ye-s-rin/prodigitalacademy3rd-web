@@ -4,7 +4,7 @@ function fastFunction(err, data, done) {
     }, 1000);
 }
 
-function slowFunction(err, data, don) {
+function slowFunction(err, data, done) {
     setTimeout(function () {
         done(undefined, data + 10);
     }, 3000);
