@@ -44,6 +44,7 @@ function Rabbit(name, color) {
 
 // Object.create 함수는 객체는 만들되 생성장 실행X
 Rabbit.prototype = Object.create(Animal.prototype);
+// Animal { constructor: [Function: Rabbit] }
 Rabbit.prototype.constructor = Rabbit;
 // 생성자의 클래스의 생성자는 자기 자신
 
@@ -51,6 +52,9 @@ const rabbit1 = new Rabbit("토끼", "white");
 
 rabbit1.run();
 rabbit1.eat();
+
+Rabbit.prototype = Object.assign(Rabbit.prototype, Animal.prototype);
+
 console.log(rabbit1);
 console.log(rabbit1.__proto__);
 /**
@@ -66,5 +70,5 @@ Animal { name: '사자', run: [Function (anonymous)] }
 토끼 동물이 달린다.
 토끼가 먹는다.
 Rabbit { name: '토끼', run: [Function (anonymous)], color: 'white' }  
-Animal { constructor: [Function: Rabbit] }
+Animal { constructor: [Function: Rabbit], eat: [Function (anonymous)] }
  */

@@ -20,4 +20,7 @@ class Rabbit extends Animal {
     }
 }
 
-const rabbit1 = new Rabbit();
+const rabbit1 = new Rabbit("토끼", "white");
+console.log(rabbit1);
+rabbit1.run();
+rabbit1.newFunction();
