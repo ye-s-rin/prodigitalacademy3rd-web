@@ -53,7 +53,7 @@ const rabbit1 = new Rabbit("토끼", "white");
 rabbit1.run();
 rabbit1.eat();
 
-Rabbit.prototype = Object.assign(Rabbit.prototype, Animal.prototype);
+Rabbit.prototype = Object.assign(Animal.prototype, Rabbit.prototype);
 
 console.log(rabbit1);
 console.log(rabbit1.__proto__);
@@ -70,5 +70,5 @@ Animal { name: '사자', run: [Function (anonymous)] }
 토끼 동물이 달린다.
 토끼가 먹는다.
 Rabbit { name: '토끼', run: [Function (anonymous)], color: 'white' }  
-Animal { constructor: [Function: Rabbit], eat: [Function (anonymous)] }
+Rabbit { constructor: [Function: Rabbit] }
  */
