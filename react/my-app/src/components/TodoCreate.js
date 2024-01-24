@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import Todo from "./Todo";
 
 export default function TodoCreate(props) {
   const inputRef = useRef();
