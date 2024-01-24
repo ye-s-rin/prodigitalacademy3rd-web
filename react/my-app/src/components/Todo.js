@@ -1,41 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import TodoCreate from "./TodoCreate";
+import TodoUpdate from "./TodoUpdate";
+import TodoDelete from "./TodoDelete";
 
 export default function Todo() {
   let i = 0;
-  const inputRef = useRef();
-  const focusInput = () => {
-    inputRef.current.focus();
-  };
-  const [text, setText] = useState("");
   const [arr, setArr] = useState([]);
-  const activeEnter = (e) => {
-    if (e.key === "Enter") {
-      setArr([text, ...arr]);
-      inputRef.current.value = "";
-    }
-  };
+  function create(item) {
+    setArr([item, ...arr]);
+  }
 
   return (
     <div>
-      <input
-        ref={inputRef}
-        type="text"
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          activeEnter(e);
-        }}
-      />
-
-      <button
-        onClick={(e) => {
-          setArr([text, ...arr]);
-          inputRef.current.value = "";
-        }}
-      >
-        입력
-      </button>
+      <TodoCreate arr={arr} setArr={setArr} />
 
       <div>
         {arr.map((elem) => (
