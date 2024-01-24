@@ -10,12 +10,14 @@ export default function Todo() {
   return (
     <div>
       <TodoCreate arr={arr} setArr={setArr} />
-      <TodoDelete arr={arr} setArr={setArr} />
-      <TodoUpdate arr={arr} setArr={setArr} />
 
       <div>
-        {arr.map((elem) => (
-          <div key={i++}>{elem}</div>
+        {arr.map((elem, idx) => (
+          <div key={i++} style={{ display: "grid", gridTemplateRows: "1fr ", gridTemplateColumns: "1fr 0.25fr 2fr" }}>
+            {/* <input type="text" placeholder={elem} disabled={true} style={{ color: "black" }} /> */}
+            <TodoUpdate arr={arr} setArr={setArr} idx={idx} />
+            <TodoDelete arr={arr} setArr={setArr} idx={idx} />
+          </div>
           // child in a list should have a unique "key" prop.
         ))}
       </div>

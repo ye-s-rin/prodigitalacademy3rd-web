@@ -7,6 +7,10 @@ import BlinkComponent from "./components/BlinkComponent";
 import CountComponent from "./components/CountComponent";
 import RegisterInputButton from "./components/RegisterInputButton";
 import Todo from "./components/Todo";
+import PrimeCalculator from "./components/PrimeCalculator";
+import { ThemeProvider } from "./components/ThemeProvider";
+import MyPage from "./components/MyPage";
+import ThemeButton from "./components/ThemeButton";
 
 function App() {
   const [visible, setVisible] = React.useState(true);
@@ -26,6 +30,11 @@ function App() {
       {/* <button onClick={() => setVisible(!visible)}>클릭</button>
       {visible ? <CountComponent /> : null} */}
       {/* <RegisterInputButton /> */}
+      {/* <PrimeCalculator /> */}
+      {/* <ThemeProvider>
+        <ThemeButton />
+        <MyPage />
+      </ThemeProvider> */}
       <Todo />
     </div>
   );
