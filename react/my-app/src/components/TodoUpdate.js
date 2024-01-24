@@ -30,11 +30,11 @@ export default function TodoUpdate(props) {
       <button
         onClick={(e) => {
           {
-            toggleDisabled(!disabled);
             if (!disabled) {
               props.arr[props.idx] = text;
               props.setArr(props.arr.slice());
             }
+            toggleDisabled(!disabled);
           }
         }}
       >
