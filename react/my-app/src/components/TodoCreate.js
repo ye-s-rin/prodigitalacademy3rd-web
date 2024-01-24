@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-export default function TodoCreate(props) {
+export default function TodoCreateProps(props) {
   const inputRef = useRef();
   const [text, setText] = useState("");
 

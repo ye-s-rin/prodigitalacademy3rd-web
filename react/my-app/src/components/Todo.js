@@ -10,6 +10,8 @@ export default function Todo() {
   return (
     <div>
       <TodoCreate arr={arr} setArr={setArr} />
+      <TodoDelete arr={arr} setArr={setArr} />
+      <TodoUpdate arr={arr} setArr={setArr} />
 
       <div>
         {arr.map((elem) => (
