@@ -6,9 +6,6 @@ import TodoDelete from "./TodoDelete";
 export default function Todo() {
   let i = 0;
   const [arr, setArr] = useState([]);
-  function create(item) {
-    setArr([item, ...arr]);
-  }
 
   return (
     <div>
