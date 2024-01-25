@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Todo() {
+export default function Board() {
   let i = 0;
   const [obj, setObj] = useState({});
   useEffect(() => {
