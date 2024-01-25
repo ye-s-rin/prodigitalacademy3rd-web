@@ -8,8 +8,6 @@ export default function BoardDelete(props) {
           {
             delete props.obj[props.idx];
             props.setObj(Object.assign({}, props.obj));
-            console.log(props.idx);
-            console.log(props.obj);
           }
         }}
       >
