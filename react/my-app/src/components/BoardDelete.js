@@ -6,8 +6,6 @@ export default function BoardDelete(props) {
       <button
         onClick={(e) => {
           {
-            // props.arr.splice(props.idx, 1);
-            // props.setArr(props.arr.slice());
             delete props.obj[props.idx];
             props.setObj(Object.assign({}, props.obj));
             console.log(props.idx);
