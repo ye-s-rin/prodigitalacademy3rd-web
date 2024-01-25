@@ -11,6 +11,7 @@ import PrimeCalculator from "./components/PrimeCalculator";
 import { ThemeProvider } from "./components/ThemeProvider";
 import MyPage from "./components/MyPage";
 import ThemeButton from "./components/ThemeButton";
+import Board from "./components/Board";
 
 function App() {
   const [visible, setVisible] = React.useState(true);
@@ -35,7 +36,8 @@ function App() {
         <ThemeButton />
         <MyPage />
       </ThemeProvider> */}
-      <Todo />
+      {/* <Todo /> */}
+      <Board />
     </div>
   );
 }
