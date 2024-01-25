@@ -35,6 +35,10 @@ export default function BoardUpdate(props) {
           onChange={(e) => {
             setTitle(e.target.value);
           }}
+          onBlur={() => {
+            props.obj[props.idx].title = title;
+            props.setObj(Object.assign({}, props.obj));
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               {
@@ -49,6 +53,10 @@ export default function BoardUpdate(props) {
           placeholder="body"
           onChange={(e) => {
             setBody(e.target.value);
+          }}
+          onBlur={() => {
+            props.obj[props.idx].body = body;
+            props.setObj(Object.assign({}, props.obj));
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
