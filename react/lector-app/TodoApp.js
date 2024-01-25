@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './TodoApp.css';
 import TodoList from './TodoList';
 
@@ -26,6 +26,20 @@ export default function TodoApp() {
     title: 'todo-2',
     color: 'blue'
   }]);
+
+  const deleteTodo = useCallback((todoId)=>{
+    
+    // setTodoList(todoList.filter(todo=>{
+    //   return todo.id !== todoId
+    // }))
+
+    setTodoList(prev=>{
+      return prev.filter((todo)=>{
+        return todo.id !== todoId
+      })
+    })
+    
+  }, [setTodoList])
 
 
 
@@ -66,7 +80,7 @@ export default function TodoApp() {
       </div>
       
       <div>
-        <TodoList todoList={todoList} />
+        <TodoList todoList={todoList} onDelete={deleteTodo} />
       </div>
     </div>
   )
