@@ -9,7 +9,13 @@ export default function TodoUpdate(props) {
   }, [setText, props.arr, props.idx]);
 
   return (
-    <div style={{ display: "grid", gridTemplateRows: "1fr ", gridTemplateColumns: "1fr 0.25fr" }}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateRows: "1fr ",
+        gridTemplateColumns: "1fr 0.25fr",
+      }}
+    >
       <input
         type="text"
         placeholder={props.arr[props.idx]}
