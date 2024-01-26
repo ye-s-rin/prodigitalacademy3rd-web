@@ -37,21 +37,23 @@ async function fetchPageData(url) {
         const summary = $(el).find(".dsc_wrap a").text().trim();
         const image = $(el).find(".news_contents a img").prop("data-lazysrc");
 
-        // let authorDetail = "";
-        // try {
-        //   const response = await axios.get(authorUrl);
-        //   const htmlAuthor = response.data;
-        //   const $author = cheerio.load(htmlAuthor);
-        //   authorDetail = $author(".author-description").text().trim();
-        // } catch (err) {
-        //   console.error(err);
-        // }
+        let newsDetail = "";
+        const newsUrl = $(el).find(".news_contents .news_tit").prop("href");
+        try {
+          const response = await axios.get(newsUrl);
+          const htmlNews = response.data;
+          const $news = cheerio.load(htmlNews);
+          newsDetail = $news.html();
+        } catch (err) {
+          console.error(err);
+        }
 
         data.push({
           title: title,
           newspaper: newspaper,
           summary: summary,
           image: image,
+          newsDetail: newsDetail,
           pageNum: pageNum,
         });
       }
@@ -66,5 +68,5 @@ async function fetchPageData(url) {
     }
   }
 
-  //   fs.writeFileSync("./secondaryCell.json", JSON.stringify(data));
+  //   fs.writeFileSync("./shinhan.json", JSON.stringify(data));
 })();
