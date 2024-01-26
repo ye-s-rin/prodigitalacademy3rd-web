@@ -16,7 +16,7 @@ async function fetchPageData(url) {
 // https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=%EC%9D%B4%EC%B0%A8%EC%A0%84%EC%A7%80
 (async () => {
   const homeUrl =
-    "https://search.https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=이차전지";
+    "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=이차전지";
   let url = homeUrl;
   const data = [];
 
@@ -27,11 +27,11 @@ async function fetchPageData(url) {
       const html = await fetchPageData(url);
       const $ = cheerio.load(html);
 
-      for (const el of $("news_area")) {
+      for (const el of $(".news_area")) {
         const title = $(el).find(".news_tit").prop("title");
-        const newspaper = $(el).find(".news_info.info_group a").text().trim();
-        const summary = $(el).find(".news_contents a img").prop("src");
-        const image = $(el).find();
+        const newspaper = $(el).find(".news_info .info_group a").text().trim();
+        const summary = $(el).find(".dsc_wrap a").text().trim();
+        const image = $(el).find(".news_contents a img").prop("src");
 
         // let authorDetail = "";
         // try {
@@ -50,7 +50,7 @@ async function fetchPageData(url) {
           image: image,
         });
       }
-      // console.log(data);
+      console.log(data);
 
       //   console.log(pageNum);
       //   isNext = $(".pager li").hasClass("next");
