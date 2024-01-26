@@ -18,16 +18,21 @@ async function fetchPageData() {
     const html = await fetchPageData(); // 프로미스가 완료될 때까지 기다립니다.
     const $ = cheerio.load(html);
 
-    const data = $(".quote .text")
+    const data = $(".quote")
       .map((idx, el) => {
-        const quote = $(el).text().trim();
-        const author = $(el).siblings(".author").text().trim();
-        const authorUrl = $(el).siblings(".author").find("a").prop("href");
+        const quote = $(el).find(".text").text().trim();
+        const author = $(el).find(".author").text().trim();
+        const authorUrl = $(el).find("a").prop("href");
+        const tags = $(el)
+          .find("a.tag")
+          .map((idx, el) => $(el).text().trim())
+          .get();
 
         return {
           quote: quote,
           author: author,
           authorUrl: authorUrl,
+          tags: tags,
         };
       })
       .get();
