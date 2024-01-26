@@ -31,7 +31,7 @@ async function fetchPageData(url) {
         const title = $(el).find(".news_tit").prop("title");
         const newspaper = $(el).find(".news_info .info_group a").text().trim();
         const summary = $(el).find(".dsc_wrap a").text().trim();
-        const image = $(el).find(".news_contents a img").prop("src");
+        const image = $(el).find(".news_contents a img").prop("data-lazysrc");
 
         // let authorDetail = "";
         // try {
