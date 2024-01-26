@@ -13,7 +13,6 @@ async function fetchPageData(url) {
   }
 }
 
-// https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=%EC%9D%B4%EC%B0%A8%EC%A0%84%EC%A7%80
 (async () => {
   const homeUrl =
     "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=신한투자증권";
@@ -68,5 +67,5 @@ async function fetchPageData(url) {
     }
   }
 
-  //   fs.writeFileSync("./shinhan.json", JSON.stringify(data));
+  fs.writeFileSync("./shinhan.json", JSON.stringify(data));
 })();
