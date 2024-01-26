@@ -16,13 +16,13 @@ async function fetchPageData(url) {
 // https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=%EC%9D%B4%EC%B0%A8%EC%A0%84%EC%A7%80
 (async () => {
   const homeUrl =
-    "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=이차전지";
+    "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=신한투자증권";
   let url = homeUrl;
   const data = [];
 
   let pageNum = 1;
   let isNext = true;
-  while (isNext) {
+  while (pageNum < 11) {
     try {
       const html = await fetchPageData(url);
       const $ = cheerio.load(html);
@@ -52,19 +52,15 @@ async function fetchPageData(url) {
           newspaper: newspaper,
           summary: summary,
           image: image,
+          pageNum: pageNum,
         });
       }
       console.log(data);
 
-      //   console.log(pageNum);
-      //   isNext = $(".pager li").hasClass("next");
-      //   if (isNext) {
-      //     url = homeUrl + $(".pager .next a").prop("href").trim("/");
-      //     pageNum++;
-      //   }
-
-      //   console.log(isNext, url);
-      isNext = false;
+      console.log(pageNum);
+      url = homeUrl + "&start=" + String(10 * pageNum + 1);
+      pageNum++;
+      console.log(url);
     } catch (error) {
       console.error("error:", error);
     }
