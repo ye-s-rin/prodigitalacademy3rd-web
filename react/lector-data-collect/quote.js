@@ -42,7 +42,7 @@ axios.get(baseUrl).then((resp) => {
 
   const quoteTags = $(".quote");
   const result = quoteTags
-    .map((idx, el) => {
+    .map(async (idx, el) => {
       const elem = $(el);
 
       const tags = elem.find(".tag");
@@ -55,15 +55,25 @@ axios.get(baseUrl).then((resp) => {
           };
         })
         .get();
+      const authorUrl = elem.find("a").prop("href");
+      const url = baseUrl + authorUrl;
+
+      const authorResp = await axios.get(url);
+      const $author = cheerio.load(authorResp.data);
+      const authorDetail = $author(".author-details").text();
 
       return {
         quote: elem.find(".text").text(),
         author: elem.find(".author").text(),
         authorUrl: elem.find("a").prop("href"),
         tags: tagsObj,
+        authorDetail: authorDetail,
       };
     })
     .get();
 
-  fs.writeFileSync("./quote.json", JSON.stringify(result));
+  Promise.all(result).then((data) => {
+    console.log(data);
+    fs.writeFileSync("./quote.json", JSON.stringify(data));
+  });
 });
