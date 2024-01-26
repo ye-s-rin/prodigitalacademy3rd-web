@@ -11,6 +11,11 @@ export default function Board() {
       .then((json) => setObj(json));
   }, []);
 
+  const deleteItem = (idx) => {
+    delete obj[idx];
+    setObj(Object.assign({}, obj));
+  };
+
   console.log(obj);
   return (
     <div>
@@ -18,7 +23,7 @@ export default function Board() {
         <div key={i++}>
           <hr />
           <div style={{ display: "flex" }}>
-            <BoardDelete obj={obj} setObj={setObj} idx={idx} />
+            <BoardDelete deleteItem={deleteItem} idx={idx} />
             <span style={{ margin: "0 0.1em" }}></span>
             <BoardUpdate obj={obj} setObj={setObj} idx={idx} />
           </div>
