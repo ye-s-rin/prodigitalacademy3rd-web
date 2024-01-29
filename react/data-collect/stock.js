@@ -8,7 +8,7 @@ import puppeteer from "puppeteer";
 async function fetchPageData(url) {
   try {
     const response = await axios.get(url, { responseType: "arraybuffer" });
-    // const response = await axios.get(url, { responseType: "arraybuffer", headers: "<<user agent>>" });
+    // const response = await axios.get(url, { responseType: "arraybuffer", headers: "User-Agent: {}," });
     const decodedData = iconv.decode(response.data, "euc-kr");
     return decodedData.toString("utf-8");
   } catch (err) {
