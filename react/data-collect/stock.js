@@ -16,9 +16,21 @@ async function fetchPageData(url) {
   }
 }
 
+async function fetchIframeData(url) {
+  const browser = await puppeteer.launch({
+    headless: "new",
+  });
+  const page = await browser.newPage();
+  await page.goto(url);
+  const iframeContent = await page.content();
+  await browser.close();
+
+  return iframeContent;
+}
+
 (async () => {
-  const homeUrl = "https://finance.naver.com/item/sise.nhn?code=005930";
-  let url = homeUrl;
+  const homeUrl = "https://finance.naver.com/";
+  let url = homeUrl + "item/sise.nhn?code=005930";
   const data = [];
 
   try {
@@ -27,70 +39,67 @@ async function fetchPageData(url) {
 
     for (const el of $home("iframe")) {
       const iframeTitle = $home(el).prop("title");
-      console.log("in for - iframeTitle:", iframeTitle);
 
       if (iframeTitle === "일별 시세") {
-        console.log("in if");
         const iframeSrc = $home(el).prop("src");
-        url += iframeSrc;
-        console.log(url);
+        url = homeUrl + iframeSrc;
 
-        const browser = await puppeteer.launch({
-          headless: "new",
-        });
-        const page = await browser.newPage();
-        await page.goto(`https://finance.naver.com${iframeSrc}`);
-        const iframeContent = await page.content();
-
-        console.log(iframeContent);
-        await browser.close();
+        // await fetchIframeData(url);
       }
     }
-    console.log("out for");
   } catch (err) {
     console.error(err);
   }
 
-  //   let pageNum = 1;
-  //   let isNext = true;
-  //   while (pageNum < 11) {
-  //     try {
-  //       const html = await fetchPageData(url);
-  //       const $ = cheerio.load(html);
+  url += "&page=1";
+  let pageNum = 1;
+  let isNext = true;
+  while (pageNum < 11) {
+    console.log(pageNum);
+    url = url.slice(0, -1) + String(pageNum);
+    console.log(url);
 
-  //       for (const el of $(".tlline2 tbody")) {
-  //         const date = $(el).find(".tah.p10.gray03").text();
+    try {
+      const html = await fetchIframeData(url);
+      const $ = cheerio.load(html);
 
-  //         const newsUrl = $(el).find(".news_contents .news_tit").prop("href");
-  //         try {
-  //           const response = await axios.get(newsUrl);
-  //           const htmlNews = response.data;
-  //           const $news = cheerio.load(htmlNews);
-  //           newsDetail = $news.html();
-  //         } catch (err) {
-  //           console.error(err);
-  //         }
+      for (const el of $(`tr[onMouseOver="mouseOver(this)"]`)) {
+        const date = $(el).find(".tah.p10.gray03").text().trim();
+        const stockClose = $(el).find(".tah.p11").eq(0).text().trim();
+        const d2d = $(el).find(".tah.p11").eq(1).text().trim();
+        const stockOpen = $(el).find(".tah.p11").eq(2).text().trim();
+        const high = $(el).find(".tah.p11").eq(3).text().trim();
+        const low = $(el).find(".tah.p11").eq(4).text().trim();
+        const volume = $(el).find(".tah.p11").eq(5).text().trim();
+        console.log(date);
 
-  //         data.push({
-  //           date: date,
-  //           stockClose: stockClose, //종가
-  //           d2d: d2d, //전일비
-  //           stockOpen: stockOpen, //시가
-  //           high: high, //고가
-  //           low: low, //저가
-  //           volume: volume, //거래량
-  //         });
-  //       }
-  //       console.log(data);
+        //   const newsUrl = $(el).find(".news_contents .news_tit").prop("href");
+        //   try {
+        //     const response = await axios.get(newsUrl);
+        //     const htmlNews = response.data;
+        //     const $news = cheerio.load(htmlNews);
+        //     newsDetail = $news.html();
+        //   } catch (err) {
+        //     console.error(err);
+        //   }
 
-  //       console.log(pageNum);
-  //       url = homeUrl + "&start=" + String(10 * pageNum + 1);
-  //       pageNum++;
-  //       console.log(url);
-  //     } catch (error) {
-  //       console.error("error:", error);
-  //     }
-  //   }
+        data.push({
+          date: date,
+          stockClose: stockClose, //종가
+          d2d: d2d, //전일비
+          stockOpen: stockOpen, //시가
+          high: high, //고가
+          low: low, //저가
+          volume: volume, //거래량
+          pageNum: pageNum,
+        });
+      }
+      console.log(data);
+      pageNum++;
+    } catch (error) {
+      console.error("error:", error);
+    }
+  }
 
   //   fs.writeFileSync("./stock.json", JSON.stringify(data));
 })();
