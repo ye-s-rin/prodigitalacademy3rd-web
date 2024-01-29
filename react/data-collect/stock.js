@@ -43,8 +43,6 @@ async function fetchIframeData(url) {
       if (iframeTitle === "일별 시세") {
         const iframeSrc = $home(el).prop("src");
         url = homeUrl + iframeSrc;
-
-        // await fetchIframeData(url);
       }
     }
   } catch (err) {
@@ -73,16 +71,6 @@ async function fetchIframeData(url) {
         const volume = $(el).find(".tah.p11").eq(5).text().trim();
         console.log(date);
 
-        //   const newsUrl = $(el).find(".news_contents .news_tit").prop("href");
-        //   try {
-        //     const response = await axios.get(newsUrl);
-        //     const htmlNews = response.data;
-        //     const $news = cheerio.load(htmlNews);
-        //     newsDetail = $news.html();
-        //   } catch (err) {
-        //     console.error(err);
-        //   }
-
         data.push({
           date: date,
           stockClose: stockClose, //종가
@@ -101,5 +89,5 @@ async function fetchIframeData(url) {
     }
   }
 
-  //   fs.writeFileSync("./stock.json", JSON.stringify(data));
+  fs.writeFileSync("./stock.json", JSON.stringify(data));
 })();
