@@ -30,6 +30,7 @@ async function downloadImage(data) {
   let url = homeUrl;
   const data = [];
 
+  let newsNum = 1;
   let pageNum = 0;
   while (pageNum < 2) {
     url = homeUrl + "&start=" + String(10 * pageNum + 1);
@@ -49,6 +50,7 @@ async function downloadImage(data) {
           title: title,
           image: image,
           pageNum: pageNum,
+          newsNum: newsNum++,
         });
       }
       console.log(data);
