@@ -13,14 +13,17 @@ async function fetchPageData(url) {
   }
 }
 
+let i = 1;
 async function downloadImage(data) {
   try {
-    const response = await axios.get(data.image, { responseType: 'arraybuffer' });
-    const buffer = Buffer.from(response.data, 'binary');
-    fs.writeFileSync(`./crawledImg/${data.title}.jpg`, buffer);
-    console.log('이미지 다운로드 완료');
+    const response = await axios.get(data.image, {
+      responseType: "arraybuffer",
+    });
+    const buffer = Buffer.from(response.data, "binary");
+    fs.writeFileSync(`./crawledImg/${i++}.jpg`, buffer);
+    console.log("이미지 다운로드 완료");
   } catch (error) {
-    console.error('이미지 다운로드 실패:', error.message);
+    console.error("이미지 다운로드 실패:", error.message);
   }
 }
 
@@ -59,7 +62,7 @@ async function downloadImage(data) {
     }
   }
 
-  for(const el of data){
+  for (const el of data) {
     await downloadImage(el);
   }
 })();
