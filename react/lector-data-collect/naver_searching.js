@@ -1,47 +1,58 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import https from "https";
+import crypto from "crypto";
 
-async function fetchNaverStock(code) {
-  const baseUrl = "https://finance.naver.com/item/sise_day.naver";
-  const params = {
-    code: code,
-  };
+const params = {
+  where: "news",
+  query: "이차전지",
+};
+
+async function fetchNaverSearch(params) {
+  const baseUrl = "https://search.naver.com/search.naver";
 
   const resp = await axios.get(baseUrl, {
     params: params,
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    },
   });
   const $ = cheerio.load(resp.data);
-  const trTags = $("tr");
-  const data = trTags
-    .slice(1, trTags.length - 1)
-    .map((i, el) => {
-      const date = $(el).find("td:nth-child(1)")?.text()?.trim();
-      const close = $(el).find("td:nth-child(2)")?.text()?.trim();
-      const ratio = $(el).find("td:nth-child(3)")?.text()?.trim();
-      const open = $(el).find("td:nth-child(4)")?.text()?.trim();
-      const high = $(el).find("td:nth-child(5)")?.text()?.trim();
-      const low = $(el).find("td:nth-child(6)")?.text()?.trim();
-      const volume = $(el).find("td:nth-child(7)")?.text()?.trim();
+  const result = $(".list_news .bx")
+    .map((i, elem) => {
+      const press = $(elem).find("a.info.press").text();
+      const anchor = $(elem).find("a.news_tit");
+      const title = anchor.text().trim();
+      const url = anchor.prop("href");
+      const dsc = $(elem).find(".news_dsc").text().trim();
+      const imgTag = $(elem).find(".dsc_thumb img");
+      // const imgUrl = imgTag.prop('src');
+      const imgUrl = imgTag.prop("data-lazysrc");
 
       return {
-        date,
-        close,
-        ratio,
-        open,
-        high,
-        low,
-        volume,
+        press: press,
+        title: title,
+        url: url,
+        dsc: dsc,
+        imgUrl: imgUrl,
       };
     })
     .get();
-  const result = data.filter((elem, idx) => {
-    return elem.date;
-  });
+
+  for (let item of result) {
+    try {
+      const resp = await axios.get(item.url, {
+        httpsAgent: new https.Agent({
+          secureOptions: crypto.constants.SSL_OP_LEGACY_SERVER_CONNECT,
+        }),
+      });
+      item.html = resp.data;
+    } catch (err) {
+      // console.error(err);
+    }
+  }
   console.log(result);
 }
 
-fetchNaverStock("005930");
+fetchNaverSearch(params);
+
+// https://search.naver.com:443/search.naver?where=news&sm=tab_jum&query=%EC%9D%B4%EC%B0%A8%EC%A0%84%EC%A7%80
+// http://search.naver.com:80/search.naver?where=news&sm=tab_jum&query=%EC%9D%B4%EC%B0%A8%EC%A0%84%EC%A7%80
+// http://search.naver.com:3000/search.naver?where=news&sm=tab_jum&query=%EC%9D%B4%EC%B0%A8%EC%A0%84%EC%A7%80
