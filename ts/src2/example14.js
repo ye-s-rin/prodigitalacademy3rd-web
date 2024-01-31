@@ -16,6 +16,16 @@ function enumerable(value) {
         descriptor.enumerable = value;
     };
 }
+/**
+{ greet: [Function (anonymous)] }
+greet
+{
+  value: [Function (anonymous)],
+  writable: true,
+  enumerable: true,
+  configurable: true
+}
+ */
 function sample(target, propertyKey, descriptor) {
     console.log(target);
     console.log(propertyKey);
