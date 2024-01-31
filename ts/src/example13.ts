@@ -6,6 +6,7 @@ function reportableClassDecorator<T extends { new (...args: any[]): {} }>(
     reportingURL = "http://www...";
   };
 }
+
 @reportableClassDecorator
 class BugReport {
   type = "report";
@@ -14,6 +15,7 @@ class BugReport {
     this.title = t;
   }
 }
+
 const bug = new BugReport("Needs dark mode");
 console.log(bug.title); // Prints "Needs dark mode"
 console.log(bug.type); // Prints "report
