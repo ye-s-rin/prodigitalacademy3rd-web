@@ -14,7 +14,7 @@ export default function CaptionImage({ imgUrl, text }: Props) {
 
   return (
     <div>
-      <img src="" alt="" />
+      <img src={imgUrl} alt={text} />
       <p></p>
     </div>
   );
