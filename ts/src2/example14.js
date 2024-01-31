@@ -16,15 +16,23 @@ function enumerable(value) {
         descriptor.enumerable = value;
     };
 }
+function sample(target, propertyKey, descriptor) {
+    console.log(target);
+    console.log(propertyKey);
+    console.log(descriptor);
+    descriptor.enumerable = false;
+}
 var Greeter = /** @class */ (function () {
     function Greeter(message) {
         this.greeting = message;
     }
+    // @enumerable(true)
+    // @sample
     Greeter.prototype.greet = function () {
         return "Hello, " + this.greeting;
     };
     __decorate([
-        enumerable(false),
+        enumerable(true),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)
@@ -32,4 +40,7 @@ var Greeter = /** @class */ (function () {
     return Greeter;
 }());
 var greet = new Greeter("World");
-console.log(greet.greet());
+// console.log(greet.greet());
+for (var p in greet) {
+    console.log(p + " type: " + typeof p);
+}
