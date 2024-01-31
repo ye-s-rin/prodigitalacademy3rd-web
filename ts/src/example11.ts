@@ -24,14 +24,14 @@ interface ITodoItem {
 // type TodoList = Array<ITodoItem>;
 type TodoList = ITodoItem[] | null;
 
-const [todoList, setTodoList] = useState < TodoList > {
-  []
-};
-todoList?.map((elem, idx)=>{
-  return elem.color
-})
-setTodoList([{
-  id: 10,
-  title: 'todo',
-  color: 'black',
-}])
+const [todoList, setTodoList] = useState<TodoList>([]);
+todoList?.map((elem, idx) => {
+  return elem.color;
+});
+setTodoList([
+  {
+    id: 10,
+    title: "todo",
+    color: "black",
+  },
+]);
