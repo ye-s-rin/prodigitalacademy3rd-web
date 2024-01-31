@@ -16,6 +16,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src"]
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["src2"]
   //   "exclude": ["node_modules"]
 }
