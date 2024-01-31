@@ -15,21 +15,23 @@ const b: Array<number | string> = [1, 2, 3, "a", "b"];
 
 // useState<TodoList>(0);
 // TodoList에 들어갈 타입을 정의하시오.
-type TodoList = [
-  {
-    id: number;
-    title: string;
-    color: number;
-  }
-];
-interface ITodoList {
-  id: number;
+interface ITodoItem {
+  id: string | number;
   title: string;
-  color: number;
+  color: string;
 }
 
-interface GenericIdentityFn<T> {
-  (arg: T): T;
-}
+// type TodoList = Array<ITodoItem>;
+type TodoList = ITodoItem[] | null;
 
-let myIdentity: GenericIdentityFn<number> = identity;
+const [todoList, setTodoList] = useState < TodoList > {
+  []
+};
+todoList?.map((elem, idx)=>{
+  return elem.color
+})
+setTodoList([{
+  id: 10,
+  title: 'todo',
+  color: 'black',
+}])
