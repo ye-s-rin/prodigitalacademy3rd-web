@@ -36,3 +36,15 @@ Cat.insertMany([
   console.log("저장된 데이터");
   console.log(data);
 });
+
+Cat.find({ name: "야옹이" }).then((data) => {
+  console.log(data);
+});
+
+Cat.findById("65bb20d3fa013eaea1659c99").then((data) => {
+  console.log(data);
+});
+
+Cat.findOne({ name: "야옹이" }).then((data) => {
+  console.log(data);
+});
