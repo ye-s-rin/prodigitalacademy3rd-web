@@ -48,3 +48,11 @@ Cat.findById("65bb20d3fa013eaea1659c99").then((data) => {
 Cat.findOne({ name: "야옹이" }).then((data) => {
   console.log(data);
 });
+
+Cat.deleteOne({ name: "Zildjian" }).then((data) => {
+  console.log(data);
+});
+
+Cat.deleteMany({ name: "야옹이" }).then((data) => {
+  console.log(data);
+});
