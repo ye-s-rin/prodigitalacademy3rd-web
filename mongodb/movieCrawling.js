@@ -9,7 +9,8 @@ const headers = {
   "Accept": "application/vnd.frograms+json;version=20",
   "Accept-Encoding": "gzip, deflate, br",
   "Accept-Language": "ko,en;q=0.9,en-US;q=0.8",
-  "Cookie": `_c_pdi=web-dYRhMH9lVFRyUNM3aXPE0vlowqonVp; _gid=GA1.2.1408200998.1706771779; __igaw__adid=NzAwPWQyMjg0YWEzMmU0NDFjZmY5ZmIyODVmYTAzYTVmMTUzOzcwMz1aZWZ0MEl4U1p4VzNneWJKVTY4Y1RFa1ZfUGN5dGRCWGQ5TzY1VjlldWVKU2ZZcnozVjQ3YWp6RkpCWExfVnQxADswMDA9NDRlMzNlOGItYTU0YS0xMWVlLTkzNzctMDI0MmFjMTEwMDAy; _pubcid=c846d495-db28-42cd-9da4-9a0e6f33c1a3; _fcOM={"k":"b019e8194c4e687b-4127835618cc87f904455c7","i":"1.231.165.73.5302242","date":1706772125151}; cto_bundle=MG_agF9tclZFUFNiT0lST1lXWWk0VlNTJTJCalUxTWFmTzIzNCUyRmpvZ1k3dzZoNmhYMFlzaENDTEhMb2JjTFU3cG9PM0pxcHRhJTJGUDVaTENNMTN4ZGFiSFh0JTJCSkh2WXp6M0taMCUyQkxmVzhvWTYxVGtrMyUyRjVNcWlYMFdORjVwRG9FM0NkUVVtYlBjRDlqVDA2dEM1Z0dveTR1YVNOa2clM0QlM0Q; _ga_S4YE5E5P6R=GS1.1.1706771778.1.1.1706773354.0.0.0; _ga=GA1.2.308733874.1706771779; _gat_gtag_UA_27006241_7=1; _gat_UA-27006241-7=1; _ga_1PYHGTCRYW=GS1.1.1706771778.1.1.1706773354.0.0.0`,
+  "Cookie": 
+    `_c_pdi=web-dYRhMH9lVFRyUNM3aXPE0vlowqonVp; _gid=GA1.2.1408200998.1706771779; __igaw__adid=NzAwPWQyMjg0YWEzMmU0NDFjZmY5ZmIyODVmYTAzYTVmMTUzOzcwMz1aZWZ0MEl4U1p4VzNneWJKVTY4Y1RFa1ZfUGN5dGRCWGQ5TzY1VjlldWVKU2ZZcnozVjQ3YWp6RkpCWExfVnQxADswMDA9NDRlMzNlOGItYTU0YS0xMWVlLTkzNzctMDI0MmFjMTEwMDAy; _pubcid=c846d495-db28-42cd-9da4-9a0e6f33c1a3; _fcOM={"k":"b019e8194c4e687b-4127835618cc87f904455c7","i":"1.231.165.73.5302242","date":1706772125151}; cto_bundle=MG_agF9tclZFUFNiT0lST1lXWWk0VlNTJTJCalUxTWFmTzIzNCUyRmpvZ1k3dzZoNmhYMFlzaENDTEhMb2JjTFU3cG9PM0pxcHRhJTJGUDVaTENNMTN4ZGFiSFh0JTJCSkh2WXp6M0taMCUyQkxmVzhvWTYxVGtrMyUyRjVNcWlYMFdORjVwRG9FM0NkUVVtYlBjRDlqVDA2dEM1Z0dveTR1YVNOa2clM0QlM0Q; _ga_S4YE5E5P6R=GS1.1.1706771778.1.1.1706773354.0.0.0; _ga=GA1.2.308733874.1706771779; _gat_gtag_UA_27006241_7=1; _gat_UA-27006241-7=1; _ga_1PYHGTCRYW=GS1.1.1706771778.1.1.1706773354.0.0.0`,
   "If-None-Match": 'W/"4f47a97db3b9c578f66d89fa801b8d54"',
   "Referer": "https://pedia.watcha.com/ko-KR/staffmades/278",
   "Sec-Ch-Ua":
@@ -45,13 +46,13 @@ async function fetchPageData(url) {
 }
 
 (async () => {
-  const homeUrl = "https://pedia.watcha.com/";
-  let url = homeUrl + "ko-KR/staffmades/278";
+  const homeUrl = "https://pedia.watcha.com/api/staffmades/278/contents";
+  let url = homeUrl + "?page=1&size=9";
   const data = [];
 
   let pageNum = 1;
   let isNext = true;
-  while (pageNum < 3) {
+  while (pageNum < 2) {
     try {
       const html = await fetchPageData(url);
       const $ = cheerio.load(html);
@@ -86,7 +87,6 @@ async function fetchPageData(url) {
       // }
       // console.log(data);
 
-      console.log(pageNum);
       // isNext = $(".pager li").hasClass("next");
       // if (isNext) {
       //   url = homeUrl + $(".pager .next a").prop("href").trim("/");
