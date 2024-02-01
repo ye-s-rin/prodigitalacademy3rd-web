@@ -1,43 +1,39 @@
 import React, { useState, useEffect } from "react";
+import TodoList from "./TodoList";
 import TodoCreate from "./TodoCreate";
-import TodoUpdate from "./TodoUpdate";
-// import TodoDelete from "./TodoDelete";
 
 type Arr = {
   arr: string[];
 };
 
 export default function Todo() {
-  let i = 0;
   const [arr, setArr] = useState<Arr>({ arr: [] });
+
+  const createTodo = (text: string) => {
+    setArr((prevArr) => ({
+      arr: [text, ...prevArr.arr],
+    }));
+  };
+
+  const updateTodo = (idx: number, text: string) => {
+    setArr((prevArr) => {
+      const newArr = [...prevArr.arr];
+      newArr[idx] = text;
+      return { arr: newArr };
+    });
+  };
+
+  const deleteTodo = (idx: number) => {
+    setArr((prevArr) => ({
+      arr: prevArr.arr.slice(0, idx).concat(prevArr.arr.slice(idx + 1)),
+    }));
+  };
 
   return (
     <div>
-      <TodoCreate
-        arr={arr.arr}
-        setArr={(newArr: string[]) => setArr({ arr: newArr })}
-      />
+      <TodoCreate createTodo={createTodo} />
 
-      <div>
-        {arr.arr.map((elem, idx) => (
-          <div
-            key={i++}
-            style={{
-              display: "grid",
-              gridTemplateRows: "1fr ",
-              gridTemplateColumns: "1fr 0.25fr 2fr",
-            }}
-          >
-            <TodoUpdate
-              arr={arr.arr}
-              setArr={(newArr: string[]) => setArr({ arr: newArr })}
-              idx={idx}
-            />
-            {/* <TodoDelete arr={arr} setArr={setArr} idx={idx} /> */}
-          </div>
-          // child in a list should have a unique "key" prop.
-        ))}
-      </div>
+      <TodoList arr={arr.arr} updateTodo={updateTodo} deleteTodo={deleteTodo} />
     </div>
   );
 }

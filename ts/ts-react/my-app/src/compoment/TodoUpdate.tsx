@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-export type Props = {
-  arr: string[];
-  setArr: (arr: string[]) => void;
+type Props = {
+  updateTodo: (idx: number, text: string) => void;
   idx: number;
+  text: string;
 };
 
 type Disabled = {
@@ -18,7 +18,9 @@ export default function TodoUpdate(props: Props) {
   const [text, setText] = useState<Text>({ text: "" });
 
   useEffect(() => {
-    setText({ text: props.arr[props.idx] });
+    setText({ text: props.text });
+    console.log("update initial props.text: " + props.text);
+    console.log("update initial: " + text.text);
   }, []);
 
   return (
@@ -31,15 +33,17 @@ export default function TodoUpdate(props: Props) {
     >
       <input
         type="text"
-        placeholder={props.arr[props.idx]}
+        placeholder={props.text}
         disabled={disabled.disabled}
         onChange={(e) => {
           setText({ text: e.target.value });
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            props.arr[props.idx] = text.text;
-            props.setArr([...props.arr]);
+            if (text.text.length > 0) {
+              props.updateTodo(props.idx, text.text);
+              console.log("update: " + text.text);
+            }
             setDisabled((prev) => ({ disabled: !prev.disabled }));
           }
         }}
@@ -47,8 +51,10 @@ export default function TodoUpdate(props: Props) {
       <button
         onClick={() => {
           if (!disabled.disabled) {
-            props.arr[props.idx] = text.text;
-            props.setArr([...props.arr]);
+            if (text.text.length > 0) {
+              props.updateTodo(props.idx, text.text);
+              console.log("update: " + text.text);
+            }
           }
           setDisabled((prev) => ({ disabled: !prev.disabled }));
         }}
