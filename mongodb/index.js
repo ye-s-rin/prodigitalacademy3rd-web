@@ -19,3 +19,8 @@ kitty.save().then((data) => {
   console.log("저장된 데이터");
   console.log(data);
 });
+
+Cat.create({ name: "야옹이" }).then((data) => {
+  console.log("저장된 데이터");
+  console.log(data);
+});
