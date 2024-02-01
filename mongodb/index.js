@@ -9,3 +9,13 @@ mongoose
     console.log(resp);
     console.log("DB 연결 성공");
   });
+
+const Cat = mongoose.model("Cat", {
+  name: String,
+});
+
+const kitty = new Cat({ name: "Zildjian" });
+kitty.save().then((data) => {
+  console.log("저장된 데이터");
+  console.log(data);
+});
