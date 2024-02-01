@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const MONGO_HOST =
-  "mongodb+srv://admin:admin@cluster0.uei2mzt.mongodb.net/movie";
+process.env.MONGO_URL+"movie";
 mongoose
   .connect(MONGO_HOST, {
     retryWrites: true,
