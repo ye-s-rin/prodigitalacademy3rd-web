@@ -56,3 +56,11 @@ Cat.deleteOne({ name: "Zildjian" }).then((data) => {
 Cat.deleteMany({ name: "야옹이" }).then((data) => {
   console.log(data);
 });
+
+Cat.updateOne({ name: "부엉이" }, { name: "meow" }).then((data) => {
+  console.log(data);
+});
+
+Cat.updateMany({ name: "부엉이" }, { name: "meow" }).then((data) => {
+  console.log(data);
+});
