@@ -38,7 +38,7 @@ const headers = {
 async function fetchPageData(url) {
   try {
     const response = await axios.get(url, { headers: headers });
-    return response.data;
+    return response.data.result;
   } catch (err) {
     console.error(err);
     throw err;
@@ -46,54 +46,27 @@ async function fetchPageData(url) {
 }
 
 (async () => {
-  const homeUrl = "https://pedia.watcha.com/api/staffmades/278/contents";
-  let url = homeUrl + "?page=1&size=9";
-  const data = [];
+  const homeUrl = "https://pedia.watcha.com";
+  let url = `${homeUrl}/api/staffmades/278/contents?page=1&size=9`;
+  const movie = [];
 
   let pageNum = 1;
-  let isNext = true;
-  while (pageNum < 2) {
+  while (pageNum < 7) {
     try {
       const html = await fetchPageData(url);
-      const $ = cheerio.load(html);
+      const json = html.result
+  
+      for(const el of json){
+        movie.push({
+          title: el.title,
+          score: (el.ratings_avg * 0.5).toFixed(1),
+          directors: [el.director_names],
+        })
+      }
 
-      // for (const el of $(".quote")) {
-      //   const quote = $(el).find(".text").text().trim();
-      //   const author = $(el).find(".author").text().trim();
-      //   const authorUrl = homeUrl + $(el).find("a").prop("href");
-      //   const tags = $(el)
-      //     .find("a.tag")
-      //     .map((idx, tagEl) => $(tagEl).text().trim())
-      //     .get();
-
-      //   let authorDetail = "";
-      //   try {
-      //     const response = await axios.get(authorUrl);
-      //     const htmlAuthor = response.data;
-      //     const $author = cheerio.load(htmlAuthor);
-      //     authorDetail = $author(".author-description").text().trim();
-      //   } catch (err) {
-      //     console.error(err);
-      //   }
-
-      //   data.push({
-      //     quote: quote,
-      //     author: author,
-      //     authorUrl: authorUrl,
-      //     tags: tags,
-      //     authorDetail: authorDetail,
-      //     pageNum: pageNum,
-      //   });
-      // }
-      // console.log(data);
-
-      // isNext = $(".pager li").hasClass("next");
-      // if (isNext) {
-      //   url = homeUrl + $(".pager .next a").prop("href").trim("/");
-      //   pageNum++;
-      // }
-      console.log($.html());
+      console.log(movie);
       console.log(pageNum++, url);
+      url=homeUrl+html.next_uri;
     } catch (error) {
       console.error("error:", error);
     }

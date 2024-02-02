@@ -1,13 +1,16 @@
 var createError = require('http-errors');
 var express = require('express');
+const cors = require('cors');  // cors 미들웨어 추가
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+app.use(cors());  // cors 미들웨어 추가
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -45,6 +48,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+const port = 3001;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
 
 module.exports = app;

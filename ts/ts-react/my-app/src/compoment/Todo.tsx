@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TodoList from "./TodoList";
 import TodoCreate from "./TodoCreate";
 
@@ -29,11 +29,22 @@ export default function Todo() {
     }));
   };
 
+  const refreshTodo = () => {
+    setArr((prevArr) => ({
+      arr: [...prevArr.arr],
+    }));
+  };
+
   return (
     <div>
       <TodoCreate createTodo={createTodo} />
 
-      <TodoList arr={arr.arr} updateTodo={updateTodo} deleteTodo={deleteTodo} />
+      <TodoList
+        arr={arr.arr}
+        updateTodo={updateTodo}
+        deleteTodo={deleteTodo}
+        refreshTodo={refreshTodo}
+      />
     </div>
   );
 }

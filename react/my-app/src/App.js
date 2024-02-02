@@ -12,6 +12,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import MyPage from "./components/MyPage";
 import ThemeButton from "./components/ThemeButton";
 import Board from "./components/Board";
+import MongoBoard from "./components/MongoBoard";
 
 function App() {
   const [visible, setVisible] = React.useState(true);
@@ -37,7 +38,8 @@ function App() {
         <MyPage />
       </ThemeProvider> */}
       {/* <Todo /> */}
-      <Board />
+      {/* <Board /> */}
+      < MongoBoard/>
     </div>
   );
 }
