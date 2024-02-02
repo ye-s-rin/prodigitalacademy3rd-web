@@ -18,18 +18,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-const boardRouter = require('./routes/board.js');
-app.use('/board', boardRouter);
-
-const birdsRouter = require('./routes/birds.js');
-app.use('/birds', birdsRouter);
-
 app.get('/sample', (req, res)=>{
   res.send("Sample");
 });
 app.post('/sample', (req, res)=>{
   res.send("Create First POST Router");
 });
+
+const boardRouter = require('./routes/board.js');
+app.use('/board', boardRouter);
+
+const birdsRouter = require('./routes/birds.js');
+app.use('/birds', birdsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
