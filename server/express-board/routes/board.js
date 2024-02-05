@@ -26,6 +26,33 @@ router.get('/', function(req, res, next){
     .catch(err=>{next(err)});
 });
 
+router.delete('/', async (req, res, next)=>{
+    const id=req.body.id;
+    const commentId=req.body.commentId;
+    console.log("request body: "+req.body);
+    console.log("in router -id: "+id+"in router -commentId: "+commentId)
+
+    Board.findById(id).then(data=>{
+        data.comments.splice(commentId,1)
+        data.save().then(data=>{
+            return res.json(data)
+        })
+    })
+
+    // await Board.findByIdAndUpdate(
+    //     id,
+    //     { $pull: { [`comments.${commentId}`]: 1 } },
+    //     { new: true }
+    // )
+    // .then(data=>{
+    //     console.log("delete in router: "+data)
+    //     res.json(data)
+    // })
+    // .catch(err=>{
+    //     console.error(err)
+    //     next(err)});
+})
+
 // router.get('/:id', function(req, res, next) {
 //     Board.findById(req.params.id)
 //         .then(data => res.json(data))
