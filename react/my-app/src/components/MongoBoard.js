@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import MongoCommentCreate from './MongoCommentCreate';
 
 export default function MongoBoard() {
   let i = 0;
   const [board, setBoard] = useState({});
+
   useEffect(() => {
+    readBoard();
+  }, []);
+
+  const readBoard = () => {
     (async () => {
       try {
         const response = await axios.get("http://localhost:3001/board");
@@ -15,7 +21,19 @@ export default function MongoBoard() {
         throw err;
       }
     })();
-  }, []);
+  }
+
+  const createComment = (id, comment) => {
+      (async () => {
+        try {
+          const response = await axios.post("http://localhost:3001/board", {id: id, comment: comment});
+          readBoard();
+        } catch (err) {
+          console.error(err);
+          throw err;
+        }
+      })();
+  };
 
   return (
     <div>
@@ -28,6 +46,12 @@ export default function MongoBoard() {
             <p>{board[idx].content}</p>
             <p>{board[idx].author}</p>
             <p>{board[idx].createAt}</p>
+
+            <hr />
+            <MongoCommentCreate createComment={createComment} id={board[idx]._id}/>
+            {board[idx].comments.map((comment) => (
+              <p>{comment}</p>
+            ))}
           <hr />
         </div>
       ))}
