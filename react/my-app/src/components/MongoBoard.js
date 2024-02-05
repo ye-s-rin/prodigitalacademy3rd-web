@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import MongoCommentCreate from './MongoCommentCreate';
+import MongoCommentCreatesRead from "./MongoCommentCreatesRead";
 
 export default function MongoBoard() {
   let i = 0;
@@ -49,9 +50,7 @@ export default function MongoBoard() {
 
             <hr />
             <MongoCommentCreate createComment={createComment} id={board[idx]._id}/>
-            {board[idx].comments.map((comment) => (
-              <p>{comment}</p>
-            ))}
+            <MongoCommentCreatesRead comments={board[idx].comments}/>
           <hr />
         </div>
       ))}
