@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import axios from 'axios';
 
 export default function MongoCommentCreate(props) {
   const inputRef = useRef();
