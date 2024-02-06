@@ -7,6 +7,7 @@ export default function TodoCreate(props) {
   return (
     <div>
       <input
+        style={{backgroundColor: props.color}}
         ref={inputRef}
         type="text"
         onChange={(e) => {

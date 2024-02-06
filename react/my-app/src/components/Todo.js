@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
+import TodoColor from "./TodoColor";
 
 export default function Todo() {
   let i = 0;
   const [arr, setArr] = useState([]);
+  const [color, setColor] = useState("");
 
   const createTodo = (text) => {
-    setArr((prevArr) => [text, ...prevArr]);
+    setArr((prevArr) => [...prevArr, text]);
   };
 
   const updateTodo = (idx, text) => {
@@ -26,12 +28,24 @@ export default function Todo() {
     });
   };
 
+  const applyColor = (color) => {
+    setColor((prevColor) => {
+      if(prevColor!==color){
+        return color;
+      }
+      else{
+        return "";
+      }
+    });
+  };
+
   return (
     <div>
-      <TodoCreate createTodo={createTodo} />
-
+      <TodoCreate createTodo={createTodo} color={color}/>
+      <TodoColor applyColor={applyColor}/>
       <TodoList
         arr={arr}
+        color={color}
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
       />
