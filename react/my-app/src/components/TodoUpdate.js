@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import '../Todo.css'
 
 export default function TodoUpdate(props) {
   const [disabled, setDisabled] = useState(true);
@@ -11,6 +12,7 @@ export default function TodoUpdate(props) {
   return (
     <div>
       <input
+        // style={{backgroundColor: props.bgColor}}
         type="text"
         placeholder={props.text}
         disabled={disabled}
