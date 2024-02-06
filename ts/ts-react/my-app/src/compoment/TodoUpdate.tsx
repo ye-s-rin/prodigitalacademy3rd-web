@@ -6,57 +6,40 @@ type Props = {
   text: string;
 };
 
-type Disabled = {
-  disabled: boolean;
-};
-type Text = {
-  text: string;
-};
-
 export default function TodoUpdate(props: Props) {
-  const [disabled, setDisabled] = useState<Disabled>({ disabled: true });
-  const [text, setText] = useState<Text>({ text: "" });
+  const [disabled, setDisabled] = useState(true);
+  const [text, setText] = useState("" );
 
   useEffect(() => {
-    setText({ text: props.text });
-    console.log("update initial props.text: " + props.text);
-    console.log("update initial: " + text.text);
-  }, []);
+    setText(props.text);
+  }, [props.text]);
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateRows: "1fr ",
-        gridTemplateColumns: "1fr 0.25fr",
-      }}
-    >
+    <div>
       <input
         type="text"
         placeholder={props.text}
-        disabled={disabled.disabled}
+        disabled={disabled}
         onChange={(e) => {
-          setText({ text: e.target.value });
+          setText(e.target.value);
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            if (text.text.length > 0) {
-              props.updateTodo(props.idx, text.text);
-              console.log("update: " + text.text);
+            if (text.length > 0) {
+              props.updateTodo(props.idx, text);
             }
-            setDisabled((prev) => ({ disabled: !prev.disabled }));
+            setDisabled(!disabled);
           }
         }}
       />
       <button
         onClick={() => {
-          if (!disabled.disabled) {
-            if (text.text.length > 0) {
-              props.updateTodo(props.idx, text.text);
-              console.log("update: " + text.text);
+          if (!disabled) {
+            if (text.length > 0) {
+              props.updateTodo(props.idx, text);
             }
           }
-          setDisabled((prev) => ({ disabled: !prev.disabled }));
+          setDisabled(!disabled);
         }}
       >
         수정

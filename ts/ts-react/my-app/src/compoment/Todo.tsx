@@ -2,37 +2,27 @@ import React, { useState } from "react";
 import TodoList from "./TodoList";
 import TodoCreate from "./TodoCreate";
 
-type Arr = {
-  arr: string[];
-};
-
 export default function Todo() {
-  const [arr, setArr] = useState<Arr>({ arr: [] });
+  const [arr, setArr] = useState<string[]>([]);
 
   const createTodo = (text: string) => {
-    setArr((prevArr) => ({
-      arr: [text, ...prevArr.arr],
-    }));
+    setArr((prevArr) => [text, ...prevArr]);
   };
 
   const updateTodo = (idx: number, text: string) => {
     setArr((prevArr) => {
-      const newArr = [...prevArr.arr];
+      const newArr = [...prevArr];
       newArr[idx] = text;
-      return { arr: newArr };
+      return (newArr);
     });
   };
 
   const deleteTodo = (idx: number) => {
-    setArr((prevArr) => ({
-      arr: prevArr.arr.slice(0, idx).concat(prevArr.arr.slice(idx + 1)),
-    }));
-  };
-
-  const refreshTodo = () => {
-    setArr((prevArr) => ({
-      arr: [...prevArr.arr],
-    }));
+    setArr((prevArr) => {
+      const newArr = [...prevArr];
+      newArr.splice(idx, 1);
+      return (newArr);
+    });
   };
 
   return (
@@ -40,10 +30,9 @@ export default function Todo() {
       <TodoCreate createTodo={createTodo} />
 
       <TodoList
-        arr={arr.arr}
+        arr={arr}
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
-        refreshTodo={refreshTodo}
       />
     </div>
   );

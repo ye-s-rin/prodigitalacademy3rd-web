@@ -14,19 +14,19 @@ export default function TodoCreate(props) {
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            {
-              props.setArr([text, ...props.arr]);
+            if (inputRef.current?.value) {
+              props.createTodo(text);
+              inputRef.current.value = "";
             }
-            inputRef.current.value = "";
           }
         }}
       />
       <button
         onClick={(e) => {
-          {
-            props.setArr([text, ...props.arr]);
+          if (inputRef.current?.value) {
+            props.createTodo(text);
+            inputRef.current.value = "";
           }
-          inputRef.current.value = "";
         }}
       >
         입력

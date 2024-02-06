@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Board = require("../models/Board");
 
+router.put('/', (req, res, next) => {
+    const id=req.body.id;
+    const commentId=req.body.commentId;
+    const comment=req.body.comment;
+    console.log(id, commentId, comment);
+
+    Board.findById(id).then(data=>{
+        data.comments[commentId] = comment;
+        data.save().then(data=>{
+            return res.json(data)
+        })
+    })
+});
+
 // 댓글 추가를 위한 POST 라우터
 router.post('/', async (req, res, next) => {
     try {
@@ -29,8 +43,6 @@ router.get('/', function(req, res, next){
 router.delete('/', async (req, res, next)=>{
     const id=req.body.id;
     const commentId=req.body.commentId;
-    console.log("request body: "+req.body);
-    console.log("in router -id: "+id+"in router -commentId: "+commentId)
 
     Board.findById(id).then(data=>{
         data.comments.splice(commentId,1)
@@ -41,7 +53,7 @@ router.delete('/', async (req, res, next)=>{
 
     // await Board.findByIdAndUpdate(
     //     id,
-    //     { $pull: { [`comments.${commentId}`]: 1 } },
+    //     { $unset: { [`comments.${commentId}`]: 1 } },
     //     { new: true }
     // )
     // .then(data=>{

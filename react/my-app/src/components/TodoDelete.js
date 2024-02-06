@@ -6,8 +6,7 @@ export default function TodoDelete(props) {
       <button
         onClick={(e) => {
           {
-            props.arr.splice(props.idx, 1);
-            props.setArr(props.arr.slice());
+            props.deleteTodo(props.idx);
           }
         }}
       >

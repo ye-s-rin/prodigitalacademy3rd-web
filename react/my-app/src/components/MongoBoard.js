@@ -16,7 +16,7 @@ export default function MongoBoard() {
       try {
         const response = await axios.get("http://localhost:3001/board");
         setBoard(response.data);
-        console.log(board);
+        console.log(response.data);
       } catch (err) {
         console.error(err);
         throw err;
@@ -27,8 +27,7 @@ export default function MongoBoard() {
   const createComment = (id, comment) => {
     (async () => {
       try {
-        console.log("createComment: "+id+", "+comment)
-        const response = await axios.post("http://localhost:3001/board", {id: id, comment: comment});
+        await axios.post("http://localhost:3001/board", {id: id, comment: comment});
         readBoard();
       } catch (err) {
         console.error(err);
@@ -40,9 +39,7 @@ export default function MongoBoard() {
   const deleteComment = (id, commentId) => {
     (async () => {
       try {
-    console.log("deleteComment: "+id+", "+commentId)
-
-        const response = await axios.delete("http://localhost:3001/board", 
+        await axios.delete("http://localhost:3001/board", 
         {
           data: {id: id, commentId: commentId}
         });
@@ -54,10 +51,10 @@ export default function MongoBoard() {
     })();
   };
 
-  const updateComment = (id, commentId) => {
+  const updateComment = (id, commentId, comment) => {
     (async () => {
       try {
-        const response = await axios.post("http://localhost:3001/board", {id: id, commentId: commentId});
+        await axios.put("http://localhost:3001/board", {id: id, commentId: commentId, comment: comment});
         readBoard();
       } catch (err) {
         console.error(err);

@@ -9,7 +9,6 @@ export default function MongoCommentDelete(props) {
         onClick={(e) => {
           {
             props.deleteComment(props.id, props.commentId);
-            console.log("delete: "+props.comment);
           }
         }}
       >

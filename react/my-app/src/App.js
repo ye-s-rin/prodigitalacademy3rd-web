@@ -37,9 +37,9 @@ function App() {
         <ThemeButton />
         <MyPage />
       </ThemeProvider> */}
-      {/* <Todo /> */}
+      <Todo />
       {/* <Board /> */}
-      < MongoBoard/>
+      {/* < MongoBoard/> */}
     </div>
   );
 }

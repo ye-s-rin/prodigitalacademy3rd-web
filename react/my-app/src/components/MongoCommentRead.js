@@ -12,7 +12,7 @@ export default function MongoCommentRead(props) {
           <MongoCommentUpdate 
             updateComment={props.updateComment} id={props.id} commentId={idx} comment={comment}/>
           <MongoCommentDelete 
-            deleteComment={props.deleteComment} id={props.id} commentId={idx} comment={comment}/>
+            deleteComment={props.deleteComment} id={props.id} commentId={idx}/>
         </div>
       ))}
     </div>

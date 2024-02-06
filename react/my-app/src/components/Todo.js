@@ -1,26 +1,40 @@
 import React, { useState } from "react";
 import TodoCreate from "./TodoCreate";
-import TodoUpdate from "./TodoUpdate";
-import TodoDelete from "./TodoDelete";
+import TodoList from "./TodoList";
 
 export default function Todo() {
   let i = 0;
   const [arr, setArr] = useState([]);
 
+  const createTodo = (text) => {
+    setArr((prevArr) => [text, ...prevArr]);
+  };
+
+  const updateTodo = (idx, text) => {
+    setArr((prevArr) => {
+      const newArr = [...prevArr];
+      newArr[idx] = text;
+      return (newArr);
+    });
+  };
+
+  const deleteTodo = (idx) => {
+    setArr((prevArr) => {
+      const newArr = [...prevArr];
+      newArr.splice(idx, 1);
+      return (newArr);
+    });
+  };
+
   return (
     <div>
-      <TodoCreate arr={arr} setArr={setArr} />
+      <TodoCreate createTodo={createTodo} />
 
-      <div>
-        {arr.map((elem, idx) => (
-          <div key={i++} style={{ display: "grid", gridTemplateRows: "1fr ", gridTemplateColumns: "1fr 0.25fr 2fr" }}>
-            {/* <input type="text" placeholder={elem} disabled={true} style={{ color: "black" }} /> */}
-            <TodoUpdate arr={arr} setArr={setArr} idx={idx} />
-            <TodoDelete arr={arr} setArr={setArr} idx={idx} />
-          </div>
-          // child in a list should have a unique "key" prop.
-        ))}
-      </div>
+      <TodoList
+        arr={arr}
+        updateTodo={updateTodo}
+        deleteTodo={deleteTodo}
+      />
     </div>
   );
 }

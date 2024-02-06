@@ -2,13 +2,7 @@ import React from "react";
 import TodoUpdate from "./TodoUpdate";
 import TodoDelete from "./TodoDelete";
 
-type Props = {
-  arr: string[];
-  updateTodo: (idx: number, text: string) => void;
-  deleteTodo: (idx: number) => void;
-};
-
-export default function TodoList(props: Props) {
+export default function TodoList(props) {
   let i = 0;
 
   return (

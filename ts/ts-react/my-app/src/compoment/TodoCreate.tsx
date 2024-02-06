@@ -8,13 +8,9 @@ type InputRef = {
   inputRef: React.RefObject<HTMLInputElement>;
 };
 
-type Text = {
-  text: string;
-};
-
 export default function TodoCreate(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [text, setText] = useState<Text>({ text: "" });
+  const [text, setText] = useState("");
 
   return (
     <div>
@@ -22,12 +18,12 @@ export default function TodoCreate(props: Props) {
         ref={inputRef}
         type="text"
         onChange={(e) => {
-          setText({ text: e.target.value });
+          setText(e.target.value);
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             if (inputRef.current?.value) {
-              props.createTodo(text.text);
+              props.createTodo(text);
               inputRef.current.value = "";
             }
           }
@@ -36,7 +32,7 @@ export default function TodoCreate(props: Props) {
       <button
         onClick={() => {
           if (inputRef.current?.value) {
-            props.createTodo(text.text);
+            props.createTodo(text);
             inputRef.current.value = "";
           }
         }}

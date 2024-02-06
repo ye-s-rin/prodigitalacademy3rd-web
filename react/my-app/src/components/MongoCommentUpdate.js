@@ -6,7 +6,8 @@ export default function MongoCommentUpdate(props) {
 
   useEffect(() => {
     setText(props.comment);
-  }, [setText]);
+    console.log("init comment["+props.commentId+"] in update.js: from "+props.comment+" to "+text); 
+  }, [props.comment]); 
 
   return (
     <div>
@@ -20,7 +21,7 @@ export default function MongoCommentUpdate(props) {
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             if (text.length > 0) {
-              props.updateComment(props.idx, text);
+              props.updateComment(props.id, props.commentId, text);
             }
             setDisabled(!disabled);
           }
@@ -30,7 +31,7 @@ export default function MongoCommentUpdate(props) {
         onClick={(e) => {
           if (!disabled) {
             if (text.length > 0) {
-              props.updateComment(props.idx, text);
+              props.updateComment(props.id, props.commentId, text);
             }
           }
           setDisabled(!disabled);
