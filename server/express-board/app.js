@@ -32,6 +32,9 @@ app.use('/board', boardRouter);
 const birdsRouter = require('./routes/birds.js');
 app.use('/birds', birdsRouter);
 
+const todoRouter = require('./routes/todo.js');
+app.use('/todo', todoRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

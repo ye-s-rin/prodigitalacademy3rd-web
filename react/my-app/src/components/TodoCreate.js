@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 export default function TodoCreate(props) {
   const inputRef = useRef();
   const [text, setText] = useState("");
-
+  
   return (
     <div>
       <input
