@@ -17,7 +17,8 @@ export default function TodoList(props) {
               updateTodo={props.updateTodo} 
               idx={idx} 
               text={elem.todo} 
-              color={elem.color}/>
+              color={elem.color}
+              updateColor={props.color}/>
             <TodoDelete deleteTodo={props.deleteTodo} idx={idx} />
           </div>
           // child in a list should have a unique "key" prop.

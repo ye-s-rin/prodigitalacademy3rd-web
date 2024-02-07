@@ -58,7 +58,21 @@ export default function Todo() {
       newArr[idx] = {todo: text, color: color};
       return (newArr);
     });
+    updateMongo(todo[idx].id, text, color);
   };
+
+const updateMongo = (id, todo, color) => {
+  (async () => {
+    try {
+      await axios.put("http://localhost:3001/todo", 
+      {id: id, todo: todo, color: color});
+      readMongo();
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  })();
+};
 
   const deleteTodo = (idx) => {
     const id = todo[idx].id;
@@ -75,14 +89,14 @@ export default function Todo() {
     (async () => {
       try {
         await axios.delete("http://localhost:3001/todo", 
-        {id: id});
+        {data: {id: id}});
         readMongo();
       } catch (err) {
         console.error(err);
         throw err;
       }
     })();
-    console.log("deleted: ",todo);
+    console.log("delete: ", id);
   };
 
   const applyColor = (color) => {
@@ -102,6 +116,7 @@ export default function Todo() {
       <TodoColor applyColor={applyColor}/>
       <TodoList
         todo={todo}
+        color={color}
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
       />

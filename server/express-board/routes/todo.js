@@ -13,6 +13,7 @@ router.post('/', (req, res, next)=>{
 });
 
 router.delete('/', async (req, res, next) => {
+    console.log("request body: ",req.body);
     const id = req.body.id;
 
     Todo.findByIdAndDelete(id)
@@ -27,13 +28,14 @@ router.get('/', function(req, res, next){
 });
 
 router.put('/', (req, res, next) => {
+    console.log(req.body);
     const id=req.body.id;
-    const commentId=req.body.commentId;
-    const comment=req.body.comment;
-    console.log(id, commentId, comment);
+    const todo=req.body.todo;
+    const color=req.body.color;
 
     Todo.findById(id).then(data=>{
-        data.comments[commentId] = comment;
+        data.todo = todo;
+        data.color = color;
         data.save().then(data=>{
             return res.json(data)
         })

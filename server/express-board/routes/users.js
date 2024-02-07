@@ -20,16 +20,16 @@ router.post("/login", async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.login(email, password);
     const tokenMaxAge = 60 * 60 * 24 * 3;
-    // const token = createToken(user, tokenMaxAge);
+    const token = createToken(user, tokenMaxAge);
 
-    // user.token = token;
+    user.token = token;
 
-    // res.cookie("authToken", token, {
-    //   httpOnly: true,
-    //   maxAge: tokenMaxAge * 1000,
-    // });
+    res.cookie("authToken", token, {
+      httpOnly: true,
+      maxAge: tokenMaxAge * 1000,
+    });
     
-    // console.log(user);
+    console.log(user);
     res.status(201).json(user);
     } catch (err) {
       console.error(err);
