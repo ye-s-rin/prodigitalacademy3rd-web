@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Board = require("../models/Board");
 
+router.get("/:paramId", (req, res, next) => {
+    if (!req.session.viewCount) {
+        req.session.viewCount = 0;
+    };
+    req.session.viewCount++;
+
+    if (!req.session.path) {
+        req.session.path = [];
+    };
+    req.session.path.push(req.params.paramId);
+
+    res.send("session test");
+});
+
 router.put('/', (req, res, next) => {
     const id=req.body.id;
     const commentId=req.body.commentId;
