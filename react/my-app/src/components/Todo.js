@@ -11,7 +11,6 @@ export default function Todo() {
 
   useEffect(() => {
     readMongo();
-    console.log(todo);
   }, []);
 
   const readMongo = () => {
@@ -32,16 +31,19 @@ export default function Todo() {
         throw err;
       }
     })();
+    console.log(todo);
   }
 
   const createTodo = (text, color) => {
     setTodo((prevArr) => [...prevArr, {todo: text, color: color}]);
+    createMongo(text, color);
   };
 
-  const createMongo = (todo) => {
+  const createMongo = (todo, color) => {
     (async () => {
       try {
-        await axios.post("http://localhost:3001/todo", {todo: todo, color: color});
+        await axios.post("http://localhost:3001/todo", 
+        {todo: todo, color: color});
         readMongo();
       } catch (err) {
         console.error(err);

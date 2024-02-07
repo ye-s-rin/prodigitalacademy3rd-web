@@ -5,7 +5,7 @@ const Todo = require("../models/Todo");
 router.post('/', (req, res, next)=>{
     console.log(req.body);
     Todo.create({
-        title: req.body.todo,
+        todo: req.body.todo,
         color: req.body.color,
     })
     .then(data=>{res.json(data)})
