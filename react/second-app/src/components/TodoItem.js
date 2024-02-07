@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 export default function TodoItem({todo, remove, update}) {
     const [mode, setMode] = useState('normal')
-    
     const [inputText, setInputText] = useState('');
     useEffect(()=>{
         setInputText(todo.title)
@@ -12,11 +11,13 @@ export default function TodoItem({todo, remove, update}) {
     <li 
         style={{backgroundColor: todo.color}}>
         <div>
-            {mode==='update' ? <input value={inputText} type="text"  />:
-             mode==='normal' ? todo.title :
-             null
-            }
-            
+            {mode==='update' ? 
+                <input 
+                    value={inputText}
+                    type="text"
+                    onChange={e=>{setInputText(e.target.value)}}
+                />
+                :mode==='normal' ? todo.title : null}
         </div>
         
         <div onClick={(e)=>{
@@ -30,10 +31,11 @@ export default function TodoItem({todo, remove, update}) {
             if (mode ==='normal'){
                 setMode('update');
             } else{
-                update();
                 setMode('normal');
+                if(inputText.length>0){
+                    update(inputText);
+                };
             }
-            
         }}>
             수정
         </div>

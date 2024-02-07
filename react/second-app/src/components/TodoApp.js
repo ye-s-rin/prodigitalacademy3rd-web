@@ -1,22 +1,25 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import TodoList from './TodoList';
+import axios from 'axios';
 
 const COLOR_MAP = [{
-  color: 'red',
+  color: 'pink',
 }, {
-  color: 'blue',
-}, {
-  color: 'white'
+  color: 'lightblue',
 }, {
   color: 'yellow'
+}, {
+  color: 'gray'
 }]
 
 export default function TodoApp() {
   const [inputText, setInputText] = useState('');
-  const [activeColor, setActiveColor] = useState(COLOR_MAP[0].color);
-  const [incrementCount, setIncrementCount] = useState(3);
+  const [activeColor, setActiveColor] = useState("");
+  const [incrementCount, setIncrementCount] = useState(0);
   
-  const [todoList, setTodoList] = useState([{
+  const [todoList, setTodoList] = useState([]);
+/**
+{
     id: 1,
     title: 'todo-1',
     color: 'red'
@@ -24,23 +27,45 @@ export default function TodoApp() {
     id: 2,
     title: 'todo-2',
     color: 'blue'
-  }]);
+  }
+ */
+
+  useEffect(() => {
+    readMongo();
+  }, []);
+
+  const readMongo = () => {
+    (async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/todo");
+        setTodoList(response.data);
+        console.log(response.data);  
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    })();
+  }
 
   const deleteTodo = useCallback((todoId)=>{
-    
-    // setTodoList(todoList.filter(todo=>{
-    //   return todo.id !== todoId
-    // }))
-
     setTodoList(prev=>{
       return prev.filter((todo)=>{
         return todo.id !== todoId
       })
     })
-    
   }, [setTodoList])
 
-
+  const updateTodo = useCallback((todoId, text)=>{
+    setTodoList((prev) => {
+      const newObj = [...prev];
+      newObj.map(obj => {
+        if (obj._id === todoId){
+          obj.title = text;
+        }
+      });
+      return (newObj);
+    });
+  }, [setTodoList])
 
   return (
     <div className="todo-app">
@@ -60,18 +85,22 @@ export default function TodoApp() {
           };
           setTodoList(prev=>prev.concat(item))
           setIncrementCount(prev=>(prev+1))
+          setInputText("");
         }}>제출</button>
       </div>
 
       <div>
         {COLOR_MAP.map(elem=>{
           return (
-            <div onClick={()=>{
+            <div
+            onClick={()=>{
               setActiveColor(elem.color);
-            }} key={elem.color} style={{width:20, height:20, 
-                        backgroundColor: elem.color, border: '1px solid',
-                        borderRadius: 5, borderColor: 'e9e9e9'
-                        }}>
+            }} 
+            key={elem.color} 
+            style={{width:20, height:20, 
+                    backgroundColor: elem.color, border: '1px solid',
+                    borderRadius: 5, borderColor: 'e9e9e9',
+                  }}>
               
             </div>
           )
@@ -79,7 +108,10 @@ export default function TodoApp() {
       </div>
       
       <div>
-        <TodoList todoList={todoList} onDelete={deleteTodo} />
+        <TodoList 
+        todoList={todoList} 
+        onDelete={deleteTodo}
+        onUpdate={updateTodo} />
       </div>
     </div>
   )
