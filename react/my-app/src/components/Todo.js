@@ -61,11 +61,28 @@ export default function Todo() {
   };
 
   const deleteTodo = (idx) => {
+    const id = todo[idx].id;
+
     setTodo((prevArr) => {
       const newArr = [...prevArr];
       newArr.splice(idx, 1);
       return (newArr);
     });
+    deleteMongo(id);
+  };
+
+  const deleteMongo = (id) => {
+    (async () => {
+      try {
+        await axios.delete("http://localhost:3001/todo", 
+        {id: id});
+        readMongo();
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    })();
+    console.log("deleted: ",todo);
   };
 
   const applyColor = (color) => {

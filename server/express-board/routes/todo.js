@@ -12,6 +12,14 @@ router.post('/', (req, res, next)=>{
     .catch(err=>{next(err)});
 });
 
+router.delete('/', async (req, res, next) => {
+    const id = req.body.id;
+
+    Todo.findByIdAndDelete(id)
+    .then(data=>{res.json(data)})
+    .catch(err=>{next(err)});
+});
+
 router.get('/', function(req, res, next){
     Todo.find()
     .then(data=>{res.json(data)})
@@ -32,16 +40,5 @@ router.put('/', (req, res, next) => {
     })
 });
 
-router.delete('/', async (req, res, next)=>{
-    const id=req.body.id;
-    const commentId=req.body.commentId;
-
-    Todo.findById(id).then(data=>{
-        data.comments.splice(commentId,1)
-        data.save().then(data=>{
-            return res.json(data)
-        })
-    })
-})
 
 module.exports = router;
