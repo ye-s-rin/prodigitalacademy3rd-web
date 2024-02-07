@@ -16,7 +16,7 @@ export default function TodoCreate(props) {
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             if (inputRef.current?.value) {
-              props.createTodo(text);
+              props.createTodo(text, props.color);
               inputRef.current.value = "";
             }
           }
@@ -25,7 +25,7 @@ export default function TodoCreate(props) {
       <button
         onClick={(e) => {
           if (inputRef.current?.value) {
-            props.createTodo(text);
+            props.createTodo(text, props.color);
             inputRef.current.value = "";
           }
         }}

@@ -6,34 +6,27 @@ import TodoColor from "./TodoColor";
 
 export default function Todo() {
   let i = 0;
-  const [arr, setArr] = useState([]);
-
   const [color, setColor] = useState("");
   const [todo, setTodo] = useState([]);
 
-  // setTodo([{
-  //   text:'',
-  //   color:''
-  // }])
-
   useEffect(() => {
     readMongo();
+    console.log(todo);
   }, []);
 
   const readMongo = () => {
     (async () => {
       try {
         const response = await axios.get("http://localhost:3001/todo");
-        setArr(response.data.map(elem=>{
-          return elem.todo
-        }))    
-        // const initTodo = [];
-        // for(const elem of response.data) {
-        //   // initTodo.push({todo: elem.todo, color: elem.color});
-        //   // createTodo(elem.todo);
-        //   // TodoList({arr, color: elem.color, updateTodo, deleteTodo});
-        // };
-        // console.log(initTodo);
+        let initTodo = [];
+        for(const elem of response.data) {
+          initTodo.push({
+            id: elem._id,
+            todo: elem.todo, 
+            color: elem.color
+          });
+        };   
+        setTodo(initTodo);
       } catch (err) {
         console.error(err);
         throw err;
@@ -41,8 +34,8 @@ export default function Todo() {
     })();
   }
 
-  const createTodo = (text) => {
-    setArr((prevArr) => [...prevArr, text]);
+  const createTodo = (text, color) => {
+    setTodo((prevArr) => [...prevArr, {todo: text, color: color}]);
   };
 
   const createMongo = (todo) => {
@@ -57,16 +50,16 @@ export default function Todo() {
     })();
   };
 
-  const updateTodo = (idx, text) => {
-    setArr((prevArr) => {
+  const updateTodo = (idx, text, color) => {
+    setTodo((prevArr) => {
       const newArr = [...prevArr];
-      newArr[idx] = text;
+      newArr[idx] = {todo: text, color: color};
       return (newArr);
     });
   };
 
   const deleteTodo = (idx) => {
-    setArr((prevArr) => {
+    setTodo((prevArr) => {
       const newArr = [...prevArr];
       newArr.splice(idx, 1);
       return (newArr);
@@ -89,8 +82,7 @@ export default function Todo() {
       <TodoCreate createTodo={createTodo} color={color}/>
       <TodoColor applyColor={applyColor}/>
       <TodoList
-        arr={arr}
-        color={color}
+        todo={todo}
         updateTodo={updateTodo}
         deleteTodo={deleteTodo}
       />

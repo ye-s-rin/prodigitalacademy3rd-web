@@ -7,7 +7,7 @@ export default function TodoList(props) {
 
   return (
     <ul>
-      {props.arr.map((elem, idx) => {
+      {props.todo.map((elem, idx) => {
         return (
           <div
             key={i++}
@@ -16,8 +16,8 @@ export default function TodoList(props) {
             <TodoUpdate 
               updateTodo={props.updateTodo} 
               idx={idx} 
-              text={elem} 
-              color={props.color}/>
+              text={elem.todo} 
+              color={elem.color}/>
             <TodoDelete deleteTodo={props.deleteTodo} idx={idx} />
           </div>
           // child in a list should have a unique "key" prop.
