@@ -29,12 +29,15 @@ export default function TodoLogin(props) {
     />
     <button
         onClick={(e) => {
+          console.log("id.length: ", id.length, "pw.length: ",pw.length);
             if (id.length > 0 && pw.length > 0) {
                 console.log("login: ",id, pw);
             }
             else {
-                idRef.current.value = "";
-                pwRef.current.value = "";
+              idRef.current.value = "";
+              pwRef.current.value = "";
+              setId("");
+              setPw("");
             }
         }}
     >
