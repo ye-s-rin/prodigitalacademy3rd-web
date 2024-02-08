@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/User");
+const {createToken, verifyToken} = require("../utils/auth");
 
 router.post("/signup", async (req, res, next) => {
     try {
@@ -16,6 +17,7 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
+  console.log(req.body);
   try {
     const { email, password } = req.body;
     const user = await User.login(email, password);
@@ -51,7 +53,7 @@ router.all("/logout", async (req, res, next) => {
       httpOnly: true,
       expires: new Date(Date.now()),
     });
-    res.cookie("");
+    res.json({message: "로그아웃 완료"});
 
     console.log(user);
     res.status(201).json(user);

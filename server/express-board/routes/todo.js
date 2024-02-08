@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Todo = require("../models/Todo");
 
+// router.get('/:text', function(req, res, next){
+//     Todo.find(req.params.text)
+//     .then(data=>{res.json(data)})
+//     .catch(err=>{next(err)});
+// });
+
 router.post('/', (req, res, next)=>{
     console.log(req.body);
     Todo.create({
@@ -41,6 +47,5 @@ router.put('/', (req, res, next) => {
         })
     })
 });
-
 
 module.exports = router;

@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var profileRouter = require('./routes/profile');
 
 const session = require('express-session'); // session
+const mongoose = require('./utils/Mongoose');
 
 var app = express();
 

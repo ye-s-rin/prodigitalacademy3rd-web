@@ -1,4 +1,4 @@
-const mongoose = require('./Mongoose.js');
+const mongoose = require("mongoose");
 
 const TodoSchema = new mongoose.Schema({
     todo: {type:String, required: true},

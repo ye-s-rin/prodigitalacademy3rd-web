@@ -3,11 +3,14 @@ import axios from 'axios';
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
 import TodoColor from "./TodoColor";
+import TodoSearch from "./TodoSearch";
+import TodoLogin from "./TodoLogin";
 
 export default function Todo() {
   let i = 0;
   const [color, setColor] = useState("");
   const [todo, setTodo] = useState([]);
+  const [display, setDisplay] = useState("");
 
   useEffect(() => {
     readMongo();
@@ -96,7 +99,6 @@ const updateMongo = (id, todo, color) => {
         throw err;
       }
     })();
-    console.log("delete: ", id);
   };
 
   const applyColor = (color) => {
@@ -110,16 +112,57 @@ const updateMongo = (id, todo, color) => {
     });
   };
 
+  const searchEqual = (text) => {
+    (async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/todo/${text}`);
+        let initTodo = [];
+        for(const elem of response.data) {
+          initTodo.push({
+            id: elem._id,
+            todo: elem.todo, 
+            color: elem.color
+          });
+        };   
+        setTodo(initTodo);
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    })();
+  };
+
+  const login = (id, pw) => {
+    console.log("login: ", id, pw);
+    (async () => {
+      try {
+        const response = await axios.post("http://localhost:3001/users", 
+          {email: id, password: pw});
+
+        console.log(response);
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    })();
+  };
+
   return (
     <div>
-      <TodoCreate createTodo={createTodo} color={color}/>
-      <TodoColor applyColor={applyColor}/>
-      <TodoList
-        todo={todo}
-        color={color}
-        updateTodo={updateTodo}
-        deleteTodo={deleteTodo}
-      />
+      <TodoLogin login={login}/>
+      <div style={{display: display}}>
+        <TodoSearch 
+          readMongo={readMongo}
+          searchEqual={searchEqual}/>
+        <TodoCreate createTodo={createTodo} color={color}/>
+        <TodoColor applyColor={applyColor}/>
+        <TodoList
+          todo={todo}
+          color={color}
+          updateTodo={updateTodo}
+          deleteTodo={deleteTodo}
+        />
+      </div>
     </div>
   );
 }

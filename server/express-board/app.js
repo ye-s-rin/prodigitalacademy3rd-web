@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const mongoose = require('./utils/Mongoose');
 
 var app = express();
 app.use(cors());  // cors 미들웨어 추가
