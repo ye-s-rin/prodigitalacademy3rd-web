@@ -10,7 +10,7 @@ export default function Todo() {
   let i = 0;
   const [color, setColor] = useState("");
   const [todo, setTodo] = useState([]);
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState("none");
 
   useEffect(() => {
     readMongo();
@@ -19,7 +19,8 @@ export default function Todo() {
   const readMongo = () => {
     (async () => {
       try {
-        const response = await axios.get("http://localhost:3001/todo");
+        const response = await axios.get("http://localhost:3001/todo", 
+          {headers: {Authorization: `Bearer ${token}`}});
         let initTodo = [];
         for(const elem of response.data) {
           initTodo.push({
@@ -132,19 +133,16 @@ const updateMongo = (id, todo, color) => {
     })();
   };
 
-  const login = (id, pw) => {
-    console.log("login: ", id, pw);
-    (async () => {
-      try {
-        const response = await axios.post("http://localhost:3001/users", 
-          {email: id, password: pw});
-
-        console.log(response);
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
-    })();
+  const login = async (id, pw, next) => {
+    await axios.post("http://localhost:3001/users/login", 
+      { email: id, password: pw })
+        .then((response) => {
+            setDisplay("");
+        })
+        .catch((err) => {
+            console.log("login fail");
+            next(err);
+        });
   };
 
   return (

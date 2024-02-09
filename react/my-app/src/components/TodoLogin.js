@@ -5,6 +5,13 @@ export default function TodoLogin(props) {
   const [id, setId] = useState("");
   const pwRef = useRef();
   const [pw, setPw] = useState("");
+
+  const reset = () => {
+    idRef.current.value = "";
+    pwRef.current.value = "";
+    setId("");
+    setPw("");
+  };
   
   return (
     <div>
@@ -29,15 +36,14 @@ export default function TodoLogin(props) {
     />
     <button
         onClick={(e) => {
-          console.log("id.length: ", id.length, "pw.length: ",pw.length);
             if (id.length > 0 && pw.length > 0) {
-                console.log("login: ",id, pw);
+              props.login(id, pw)
+              .catch((error) => {
+                reset();
+              });
             }
             else {
-              idRef.current.value = "";
-              pwRef.current.value = "";
-              setId("");
-              setPw("");
+              reset();
             }
         }}
     >
