@@ -33,6 +33,19 @@ export default function TodoLogin(props) {
       onChange={(e) => {
         setPw(e.target.value);
       }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          if (id.length > 0 && pw.length > 0) {
+            props.login(id, pw)
+            .catch((error) => {
+              reset();
+            });
+          }
+          else {
+            reset();
+          }
+        }
+      }}
     />
     <button
         onClick={(e) => {

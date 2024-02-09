@@ -19,8 +19,7 @@ export default function Todo() {
   const readMongo = () => {
     (async () => {
       try {
-        const response = await axios.get("http://localhost:3001/todo", 
-          {headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.get("http://localhost:3001/todo");
         let initTodo = [];
         for(const elem of response.data) {
           initTodo.push({
