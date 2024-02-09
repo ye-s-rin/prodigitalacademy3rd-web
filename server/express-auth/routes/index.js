@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
-
 /* GET cookie*/
 router.get('/', async function (req, res, next) {
   // 쿠키 읽기
@@ -18,7 +13,7 @@ router.get('/', async function (req, res, next) {
     secure: false, // HTTPS 프로토콜만 쿠키 사용 가능
     signed: false // 서명 여부 (HTTPS)
   });
-  res.send("AA")
+  res.send("auth")
 
 });
 
