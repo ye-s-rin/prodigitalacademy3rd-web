@@ -12,28 +12,24 @@ export default function Todo() {
   const [todo, setTodo] = useState([]);
   const [display, setDisplay] = useState("none");
 
-  useEffect(() => {
-    readMongo();
-  }, []);
+  // useEffect(() => {
+  //   readMongo();
+  // }, []);
 
-  const readMongo = () => {
-    (async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/todo");
-        let initTodo = [];
-        for(const elem of response.data) {
-          initTodo.push({
+  const readMongo = async () => {
+        await axios.get("http://localhost:3001/todo")
+        .then((response) => {
+          let initTodo = [];
+          for(const elem of response.data) {
+            initTodo.push({
             id: elem._id,
             todo: elem.todo, 
             color: elem.color
-          });
-        };   
-        setTodo(initTodo);
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
-    })();
+            });
+          };
+          setTodo(initTodo);
+        })
+        .catch((err) => console.log(err));
     console.log(todo);
   }
 
@@ -42,17 +38,10 @@ export default function Todo() {
     createMongo(text, color);
   };
 
-  const createMongo = (todo, color) => {
-    (async () => {
-      try {
-        await axios.post("http://localhost:3001/todo", 
-        {todo: todo, color: color});
-        readMongo();
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
-    })();
+  const createMongo = async (todo, color) => {
+    await axios.post("http://localhost:3001/todo", {todo: todo, color: color})
+    .then(readMongo())
+    .catch((err) => console.log(err));
   };
 
   const updateTodo = (idx, text, color) => {
@@ -64,18 +53,11 @@ export default function Todo() {
     updateMongo(todo[idx].id, text, color);
   };
 
-const updateMongo = (id, todo, color) => {
-  (async () => {
-    try {
-      await axios.put("http://localhost:3001/todo", 
-      {id: id, todo: todo, color: color});
-      readMongo();
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  })();
-};
+  const updateMongo = async (id, todo, color) => {
+    await axios.put("http://localhost:3001/todo", {id: id, todo: todo, color: color})
+    .then(readMongo())
+    .catch((err) => console.log(err));
+  };
 
   const deleteTodo = (idx) => {
     const id = todo[idx].id;
@@ -88,17 +70,10 @@ const updateMongo = (id, todo, color) => {
     deleteMongo(id);
   };
 
-  const deleteMongo = (id) => {
-    (async () => {
-      try {
-        await axios.delete("http://localhost:3001/todo", 
-        {data: {id: id}});
-        readMongo();
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
-    })();
+  const deleteMongo = async (id) => {
+    await axios.delete("http://localhost:3001/todo", {data: {id: id}})
+    .then(readMongo())
+    .catch((err) => console.log(err));
   };
 
   const applyColor = (color) => {
@@ -112,36 +87,32 @@ const updateMongo = (id, todo, color) => {
     });
   };
 
-  const searchEqual = (text) => {
-    (async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/todo/${text}`);
-        let initTodo = [];
-        for(const elem of response.data) {
-          initTodo.push({
-            id: elem._id,
-            todo: elem.todo, 
-            color: elem.color
-          });
-        };   
-        setTodo(initTodo);
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
-    })();
+  const searchEqual = async (text) => {
+    await axios.get(`http://localhost:3001/todo/${text}`)
+    .then((response) => {
+      let initTodo = [];
+      for(const elem of response.data) {
+        initTodo.push({
+          id: elem._id,
+          todo: elem.todo, 
+          color: elem.color
+        });
+      };   
+      setTodo(initTodo);
+    })
+    .catch((err) => console.log(err));
   };
 
   const login = async (id, pw, next) => {
-    await axios.post("http://localhost:3001/users/login", 
-      { email: id, password: pw })
-        .then((response) => {
-            setDisplay("");
-        })
-        .catch((err) => {
-            console.log("login fail");
-            next(err);
-        });
+    await axios.post("http://localhost:3001/users/login", { email: id, password: pw })
+    .then((response) => {
+        readMongo();
+        setDisplay("");
+    })
+    .catch((err) => {
+        console.log("login fail");
+        next(err);
+    });
   };
 
   return (
