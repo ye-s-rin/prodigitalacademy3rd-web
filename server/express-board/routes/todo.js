@@ -1,12 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const Todo = require("../models/Todo");
+const {createToken, verifyToken} = require("../utils/auth");
 
-// router.get('/:text', function(req, res, next){
-//     Todo.find(req.params.text)
-//     .then(data=>{res.json(data)})
-//     .catch(err=>{next(err)});
-// });
+async function authenticate(req, res, next) {
+
+  console.log(req.cookies, req.headers);
+
+    let token = req.cookies.authToken;
+    let headerToken = req.headers.authorization;
+    
+  console.log("token: ", token);
+  console.log("headerToken: ", headerToken);
+
+    if (!token && headerToken) {
+      token = headerToken.split(" ")[1];
+    }
+  
+    const user = verifyToken(token);
+
+  console.log("user: ", user);
+
+    req.user = user;
+    
+    if (!user) {
+      const error = new Error("Authorization Failed");
+      error.status = 403;
+      next(error);
+    }
+    next();
+  };
 
 router.post('/', (req, res, next)=>{
     console.log(req.body);
@@ -27,7 +50,9 @@ router.delete('/', async (req, res, next) => {
     .catch(err=>{next(err)});
 });
 
-router.get('/', function(req, res, next){
+router.get('/', authenticate, async function(req, res, next){
+    console.log(req);
+    
     Todo.find()
     .then(data=>{res.json(data)})
     .catch(err=>{next(err)});

@@ -7,7 +7,7 @@ router.get('/', async function (req, res, next) {
   console.log(req.cookies);
 
   // 쿠키 쓰기
-  res.cookie('cookieName2', 'cookieValue', {
+  res.cookie('cookieName1', 'cookieValue', {
     maxAge: 1000 * 60 * 60 *24, // 밀리초 (하루)
     httpOnly: true, // JS 접근 불가(프론트에서 접근 못하도록)
     secure: false, // HTTPS 프로토콜만 쿠키 사용 가능

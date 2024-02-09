@@ -12,10 +12,6 @@ export default function Todo() {
   const [todo, setTodo] = useState([]);
   const [display, setDisplay] = useState("none");
 
-  // useEffect(() => {
-  //   readMongo();
-  // }, []);
-
   const readMongo = async () => {
         await axios.get("http://localhost:3001/todo")
         .then((response) => {

@@ -67,6 +67,10 @@ router.all("/logout", async (req, res, next) => {
 async function authenticate(req, res, next) {
   let token = req.cookies.authToken;
   let headerToken = req.headers.authorization;
+
+  console.log("token: ", token);
+  console.log("headerToken: ", headerToken);
+
   if (!token && headerToken) {
     token = headerToken.split(" ")[1];
   }
