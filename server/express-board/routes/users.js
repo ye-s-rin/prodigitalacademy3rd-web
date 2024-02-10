@@ -17,7 +17,6 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
-  console.log(req.body);
   try {
     const { email, password } = req.body;
     const user = await User.login(email, password);
@@ -67,9 +66,6 @@ router.all("/logout", async (req, res, next) => {
 async function authenticate(req, res, next) {
   let token = req.cookies.authToken;
   let headerToken = req.headers.authorization;
-
-  console.log("token: ", token);
-  console.log("headerToken: ", headerToken);
 
   if (!token && headerToken) {
     token = headerToken.split(" ")[1];

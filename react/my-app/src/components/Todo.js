@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 import TodoCreate from "./TodoCreate";
 import TodoList from "./TodoList";
 import TodoColor from "./TodoColor";
@@ -11,9 +12,13 @@ export default function Todo() {
   const [color, setColor] = useState("");
   const [todo, setTodo] = useState([]);
   const [display, setDisplay] = useState("none");
+  const [cookies, setCookie ,removeCookie] = useCookies(['authToken']);
 
   const readMongo = async () => {
-        await axios.get("http://localhost:3001/todo")
+        await axios.get("http://localhost:3001/todo", {
+          withCredentials: true,
+          header : { Authorization: cookies.authToken }
+        })
         .then((response) => {
           let initTodo = [];
           for(const elem of response.data) {
@@ -102,6 +107,8 @@ export default function Todo() {
   const login = async (id, pw, next) => {
     await axios.post("http://localhost:3001/users/login", { email: id, password: pw })
     .then((response) => {
+      console.log("response: ", response);
+      setCookie('authToken', response.data.token);
         readMongo();
         setDisplay("");
     })
