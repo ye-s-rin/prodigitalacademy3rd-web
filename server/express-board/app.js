@@ -10,7 +10,10 @@ var usersRouter = require('./routes/users');
 const mongoose = require('./utils/Mongoose');
 
 var app = express();
-app.use(cors());  // cors 미들웨어 추가
+app.use((cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+})));  // cors 미들웨어 추가
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -13,7 +13,7 @@ export default function Todo() {
   const [display, setDisplay] = useState("none");
 
   const readMongo = async () => {
-        await axios.get("http://localhost:3001/todo")
+        await axios.get("http://localhost:3001/todo", { withCredentials: true })
         .then((response) => {
           let initTodo = [];
           for(const elem of response.data) {
@@ -100,8 +100,10 @@ export default function Todo() {
   };
 
   const login = async (id, pw, next) => {
-    await axios.post("http://localhost:3001/users/login", { email: id, password: pw })
+    await axios.post("http://localhost:3001/users/login", 
+      { email: id, password: pw }, { withCredentials: true } ) // 이 옵션을 통해 쿠키를 요청에 포함)
     .then((response) => {
+        console.log(response.data); // 서버에서 반환한 데이터 처리
         readMongo();
         setDisplay("");
     })
