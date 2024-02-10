@@ -45,7 +45,8 @@ router.delete('/', authenticate, async (req, res, next) => {
 router.get('/:search', authenticate, async function(req, res, next){
     const search = req.params.search;
     
-    Todo.find({ todo: search })
+    Todo.find({ todo: search }) // 동등 검색
+    Todo.find({ todo: { $regex: search, $options: 'i' } }) // 포함 검색
     .then(data=>{res.json(data)})
     .catch(err=>{next(err)});
 });
