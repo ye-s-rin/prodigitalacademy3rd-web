@@ -23,7 +23,7 @@ async function authenticate(req, res, next) {
     next();
   };
 
-router.post('/', (req, res, next)=>{
+router.post('/', authenticate, async (req, res, next)=>{
     console.log(req.body);
     Todo.create({
         todo: req.body.todo,
@@ -33,7 +33,7 @@ router.post('/', (req, res, next)=>{
     .catch(err=>{next(err)});
 });
 
-router.delete('/', async (req, res, next) => {
+router.delete('/', authenticate, async (req, res, next) => {
     console.log("request body: ",req.body);
     const id = req.body.id;
 
@@ -50,7 +50,7 @@ router.get('/', authenticate, async function(req, res, next){
     .catch(err=>{next(err)});
 });
 
-router.put('/', (req, res, next) => {
+router.put('/', authenticate, async (req, res, next) => {
     console.log(req.body);
     const id=req.body.id;
     const todo=req.body.todo;
