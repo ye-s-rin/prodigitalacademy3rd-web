@@ -43,7 +43,7 @@ router.delete('/', async (req, res, next) => {
 });
 
 router.get('/', authenticate, async function(req, res, next){
-    console.log(req);
+    console.log(req.user);
     
     Todo.find()
     .then(data=>{res.json(data)})
