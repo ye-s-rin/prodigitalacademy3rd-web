@@ -14,6 +14,12 @@ export default function TodoUpdate(props) {
     setColor(props.color);
   }, []);
 
+  useEffect(() => {
+    if(!disabled){
+      setColor(props.updateColor);
+    }
+  }, [props.updateColor]);
+
   return (
     <li>
     <div>
@@ -28,7 +34,7 @@ export default function TodoUpdate(props) {
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             if (text.length > 0) {
-              props.updateTodo(props.idx, text, props.color);
+              props.updateTodo(props.idx, text, props.updateColor);
             }
             setDisabled(!disabled);
           }
@@ -38,7 +44,7 @@ export default function TodoUpdate(props) {
         onClick={(e) => {
           if (!disabled) {
             if (text.length > 0) {
-              props.updateTodo(props.idx, text, props.color);
+              props.updateTodo(props.idx, text, props.updateColor);
             }
           }
           setDisabled(!disabled);
