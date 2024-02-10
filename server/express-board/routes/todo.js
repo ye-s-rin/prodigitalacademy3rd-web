@@ -4,22 +4,14 @@ const Todo = require("../models/Todo");
 const {createToken, verifyToken} = require("../utils/auth");
 
 async function authenticate(req, res, next) {
-
-  console.log(req.cookies, req.headers);
-
     let token = req.cookies.authToken;
     let headerToken = req.headers.authorization;
-    
-  console.log("token: ", token);
-  console.log("headerToken: ", headerToken);
 
     if (!token && headerToken) {
       token = headerToken.split(" ")[1];
     }
   
     const user = verifyToken(token);
-
-  console.log("user: ", user);
 
     req.user = user;
     
