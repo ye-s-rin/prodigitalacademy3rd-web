@@ -6,6 +6,8 @@ export default function TodoUpdate(props) {
   const [text, setText] = useState("");
   const [color, setColor] = useState("");
 
+  console.log("in TodoUpdate: ", props.text, props.color);
+
   useEffect(() => {
     setText(props.text);
   }, [props.text]);

@@ -42,6 +42,14 @@ router.delete('/', authenticate, async (req, res, next) => {
     .catch(err=>{next(err)});
 });
 
+router.get('/:search', authenticate, async function(req, res, next){
+    const search = req.params.search;
+    
+    Todo.find({ todo: search })
+    .then(data=>{res.json(data)})
+    .catch(err=>{next(err)});
+});
+
 router.get('/', authenticate, async function(req, res, next){
     console.log(req.user);
     

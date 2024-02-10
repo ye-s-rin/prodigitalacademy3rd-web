@@ -7,8 +7,7 @@ import TodoSearch from "./TodoSearch";
 import TodoLogin from "./TodoLogin";
 
 export default function Todo() {
-  let i = 0;
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("white");
   const [todo, setTodo] = useState([]);
   const [display, setDisplay] = useState("none");
 
@@ -82,7 +81,7 @@ export default function Todo() {
         return color;
       }
       else{
-        return "";
+        return "white";
       }
     });
   };

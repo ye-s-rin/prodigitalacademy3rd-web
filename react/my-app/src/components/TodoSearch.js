@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 export default function TodoSearch(props) {
   const inputRef = useRef();
-  const [text, setText] = useState("");
   
   return (
     <div>
@@ -11,11 +10,12 @@ export default function TodoSearch(props) {
         type="text"
         placeholder="검색"
         onChange={(e) => {
-          setText(e.target.value);
-          props.searchEqual(text);
-          if(text.length === 0){
+          if(e.target.value.length === 0){
             props.readMongo();
-          };
+          }
+          else{
+            props.searchEqual(e.target.value);
+          }
         }}
       />
       <hr />

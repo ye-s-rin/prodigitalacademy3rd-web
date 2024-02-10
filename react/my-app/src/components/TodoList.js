@@ -3,14 +3,15 @@ import TodoUpdate from "./TodoUpdate";
 import TodoDelete from "./TodoDelete";
 
 export default function TodoList(props) {
-  let i = 0;
+  console.log("todo in TodoList: ", props.todo);
 
   return (
     <ul>
       {props.todo.map((elem, idx) => {
+        {console.log("in map: ", elem.todo, elem.color)}
         return (
           <div
-            key={i++}
+            key={elem.id}
             style={{ display: 'flex'}}
           >
             <TodoUpdate 

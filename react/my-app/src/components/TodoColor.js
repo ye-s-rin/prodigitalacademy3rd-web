@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 export default function TodoColor(props) {
   let i = 0;
-  const [colors, setColors] = useState(["pink", "lightblue", "yellow", "lightgray"]);
+  const [colors, setColors] = useState(["pink", "lightblue", "yellow", "lightgray", "white"]);
 
   return (
     <div>
@@ -15,7 +15,7 @@ export default function TodoColor(props) {
             backgroundColor: color,
             borderRadius: "50%",
             display: "inline-block",
-            marginRight: "5%",
+            marginRight: "2.8%",
             border: "none",
           }}
           onClick={(e) => {
