@@ -35,8 +35,9 @@ export default function Todo() {
   };
 
   const createMongo = async (todo, color) => {
-    await axios.post("http://localhost:3001/todo", {todo: todo, color: color})
-    .then(readMongo())
+    await axios.post("http://localhost:3001/todo", 
+      {todo: todo, color: color}, { withCredentials: true })
+    .then(() => readMongo())
     .catch((err) => console.log(err));
   };
 
@@ -50,8 +51,10 @@ export default function Todo() {
   };
 
   const updateMongo = async (id, todo, color) => {
-    await axios.put("http://localhost:3001/todo", {id: id, todo: todo, color: color})
-    .then(readMongo())
+    await axios.put("http://localhost:3001/todo", 
+      {id: id, todo: todo, color: color},
+      { withCredentials: true })
+    .then(() => readMongo())
     .catch((err) => console.log(err));
   };
 
@@ -67,8 +70,9 @@ export default function Todo() {
   };
 
   const deleteMongo = async (id) => {
-    await axios.delete("http://localhost:3001/todo", {data: {id: id}})
-    .then(readMongo())
+    await axios.delete("http://localhost:3001/todo", 
+      {data: {id: id}, withCredentials: true})
+    .then(() => readMongo())
     .catch((err) => console.log(err));
   };
 
@@ -84,7 +88,7 @@ export default function Todo() {
   };
 
   const searchEqual = async (text) => {
-    await axios.get(`http://localhost:3001/todo/${text}`)
+    await axios.get(`http://localhost:3001/todo/${text}`, { withCredentials: true })
     .then((response) => {
       let initTodo = [];
       for(const elem of response.data) {
