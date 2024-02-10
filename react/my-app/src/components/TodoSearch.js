@@ -9,6 +9,7 @@ export default function TodoSearch(props) {
       <input
         ref={inputRef}
         type="text"
+        placeholder="검색"
         onChange={(e) => {
           setText(e.target.value);
           props.searchEqual(text);
@@ -17,9 +18,6 @@ export default function TodoSearch(props) {
           };
         }}
       />
-      <button>
-        검색
-      </button>
       <hr />
     </div>
   );
