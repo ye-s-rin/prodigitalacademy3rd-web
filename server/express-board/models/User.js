@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "비밀번호가 입력되어야 합니다."],
     },
+    nickname: {
+        type: String,
+    }
 });
 
 userSchema.statics.signUp = async function (email, password) 
