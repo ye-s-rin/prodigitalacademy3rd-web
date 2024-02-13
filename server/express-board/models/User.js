@@ -56,6 +56,6 @@ visibleUser.get(function (value, virtual, doc) {
         nickname: doc.nickname,
     };
 });
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
