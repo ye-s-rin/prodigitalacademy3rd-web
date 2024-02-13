@@ -87,4 +87,13 @@ router.get("/protected", authenticate, async (req, res, next) => {
   res.json({ data: "민감한 데이터" });
 });
 
+router.post("/", authenticate, async (req, res, next) => {
+  console.log(req.user);
+  const id=req.body.id;
+
+  User.findById(id)
+    .then(data=>{res.json(data.nickname)})
+    .catch(err=>{next(err)});
+});
+
 module.exports = router;

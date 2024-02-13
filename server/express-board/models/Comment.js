@@ -5,7 +5,7 @@ const CommentSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now},
-    comments: {type: Array, default: []},
+    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
 })
 const Board = mongoose.model("Comment", CommentSchema);
 module.exports = Board
