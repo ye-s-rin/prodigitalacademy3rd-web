@@ -16,45 +16,17 @@ export default function Board() {
 
   const readBoard = async () => {
     await axios.get("http://localhost:3001/board", { withCredentials: true })
-    .then( async (response) => {
-      let nickname = "";
-
-      console.log("author: ", response.data);
-
-      await axios.post("http://localhost:3001/users/", 
-      { id: response.data.author }, { withCredentials: true } ) // 이 옵션을 통해 쿠키를 요청에 포함
-      .then((response) => {
-          console.log(response.data);
-          nickname = response.data;
-      })
-      .catch((err) => console.log(err));
-
-      let initBoard = [];
-      for(const elem of response.data) {
-        initBoard.push({
-        id: elem._id,
-        author: elem.author,
-        nickname: nickname,
-        title: elem.title, 
-        content: elem.content
-        });
-      };
-      setBoard(initBoard);
-    })
-    .catch((err) => console.log(err));
-  console.log(board);
-  }
-
-  const readUser = async () => {
-    await axios.get("http://localhost:3001/user", { withCredentials: true })
     .then((response) => {
+      console.log("board: ", response.data);
+
       let initBoard = [];
       for(const elem of response.data) {
         initBoard.push({
         id: elem._id,
-        author: elem.author,
         title: elem.title, 
-        content: elem.content
+        content: elem.content,
+        author: elem.author._id,
+        nickname: elem.author.nickname || "익명",
         });
       };
       setBoard(initBoard);

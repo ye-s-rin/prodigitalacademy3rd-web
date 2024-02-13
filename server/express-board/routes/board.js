@@ -23,6 +23,51 @@ function authenticate(req, res, next) {
     next();
   };
 
+router.get('/', authenticate, function(req, res, next){
+    console.log("req.user.nickname: ", req.user.nickname);
+    
+    Board.find().populate({
+        path: 'author',
+        select: 'nickname'
+    })
+    .then(data=>{res.json(data)})
+    .catch(err=>(next(err)));
+});
+
+router.post('/', authenticate, (req, res, next)=>{
+    Board.create({
+        title: req.body.title,
+        author: req.body.author || 'Anonymous',
+        content: req.body.content,
+    })
+    .then(data=>{res.json(data)})
+    .catch(err=>{next(err)});
+});
+
+router.put('', authenticate, (req, res, next)=>{
+    console.log(req.body);
+    const id=req.body.id;
+    const title=req.body.title;
+    const content=req.body.content;
+
+    Board.findById(id).then(data=>{
+        data.title = title;
+        data.content = content;
+        data.save().then(data=>{
+            return res.json(data)
+        })
+    })
+});
+
+router.delete('/', authenticate, (req, res, next)=>{
+    console.log("request body: ",req.body);
+    const id = req.body.id;
+
+    Board.findByIdAndDelete(id)
+    .then(data=>{res.json(data)})
+    .catch(err=>{next(err)});
+});
+
 // router.get("/:paramId", (req, res, next) => {
 //     if (!req.session.viewCount) {
 //         req.session.viewCount = 0;
@@ -99,53 +144,5 @@ function authenticate(req, res, next) {
 //     //     console.error(err)
 //     //     next(err)});
 // })
-
-router.get('/:id', authenticate, function(req, res, next) {
-    Board.findById(req.params.id)
-        .then(data => res.json(data))
-        .catch(err => next(err));
-});
-
-router.get('/', authenticate, function(req, res, next){
-    console.log(req.user);
-    
-    Board.find()
-    .then(data=>{res.json(data)})
-    .catch(err=>{next(err)});
-});
-
-router.post('/', authenticate, (req, res, next)=>{
-    Board.create({
-        title: req.body.title,
-        author: req.body.author || 'Anonymous',
-        content: req.body.content,
-    })
-    .then(data=>{res.json(data)})
-    .catch(err=>{next(err)});
-});
-
-router.put('', authenticate, (req, res, next)=>{
-    console.log(req.body);
-    const id=req.body.id;
-    const title=req.body.title;
-    const content=req.body.content;
-
-    Board.findById(id).then(data=>{
-        data.title = title;
-        data.content = content;
-        data.save().then(data=>{
-            return res.json(data)
-        })
-    })
-});
-
-router.delete('/', authenticate, (req, res, next)=>{
-    console.log("request body: ",req.body);
-    const id = req.body.id;
-
-    Board.findByIdAndDelete(id)
-    .then(data=>{res.json(data)})
-    .catch(err=>{next(err)});
-});
 
 module.exports = router;
