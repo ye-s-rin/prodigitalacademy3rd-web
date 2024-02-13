@@ -56,6 +56,9 @@ visibleUser.get(function (value, virtual, doc) {
         nickname: doc.nickname,
     };
 });
+//"User" 모델을 생성하면 기본적으로 "users"라는 이름의 컬렉션이 MongoDB에 생성
+//"User" 모델을 생성하면서 컬렉션의 이름을 "my_users"로 지정하고 싶다면
+//const User = mongoose.model("User", userSchema, "my_users");
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
