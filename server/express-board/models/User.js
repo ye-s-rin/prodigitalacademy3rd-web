@@ -19,16 +19,17 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.statics.signUp = async function (email, password) 
+userSchema.statics.signUp = async function (email, password, nickname) 
 {
     const salt = await bcrypt.genSalt();
     console.log(salt);
     try {
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = await this.create({ email, password: hashedPassword });
+        const user = await this.create({ email, password: hashedPassword, nickname });
     return {
         _id: user._id,
         email: user.email,
+        nickname: user.nickname,
     };
     } catch (err) {
         throw err;
@@ -52,6 +53,7 @@ visibleUser.get(function (value, virtual, doc) {
     return {
         _id: doc._id,
         email: doc.email,
+        nickname: doc.nickname,
     };
 });
 const User = mongoose.model("user", userSchema);
