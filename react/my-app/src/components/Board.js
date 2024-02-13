@@ -8,13 +8,14 @@ import BoardLogin from "./BoardLogin";
 export default function Board() {
   let i = 0;
   const [board, setBoard] = useState([]);
+  const [user, setUser] = useState({id:"", nickname: ""});
   const [display, setDisplay] = useState("none");
 
   useEffect(() => {
-    readBoard();
+    readMongo();
   }, []);
 
-  const readBoard = async () => {
+  const readMongo = async () => {
     await axios.get("http://localhost:3001/board", { withCredentials: true })
     .then((response) => {
       console.log("board: ", response.data);
@@ -35,17 +36,36 @@ export default function Board() {
   console.log(board);
   }
 
+  const createBoard = (title, content) => {
+    setBoard((prevArr) => [...prevArr, {title: title, author: user.id, content: content}]);
+  };
+
+  const updateBoard = (idx, title, content) => {
+    setBoard((prevArr) => {
+      const newArr = [...prevArr];
+      newArr[idx] = {...newArr[idx], title: title, content: content};
+      return (newArr);
+    });
+  };
+
   const deleteBoard = (idx) => {
-    delete board[idx];
-    setBoard(Object.assign({}, board));
+    const id = board[idx].id;
+
+    setBoard((prevArr) => {
+      const newArr = [...prevArr];
+      newArr.splice(idx, 1);
+      return (newArr);
+    });
   };
 
   const login = async (id, pw, next) => {
     await axios.post("http://localhost:3001/users/login", 
       { email: id, password: pw }, { withCredentials: true } ) // 이 옵션을 통해 쿠키를 요청에 포함
     .then((response) => {
-        readBoard();
+        readMongo();
         setDisplay("");
+        setUser({id: response.data._id, nickname: response.data.nickname});
+        console.log("user: ",user);
     })
     .catch((err) => {
         console.log("login fail");
@@ -58,18 +78,20 @@ export default function Board() {
       <BoardLogin login={login}/>
       
       <div style={{display: display}}>
+      <BoardCreate createBoard={createBoard} nickname={user.nickname}/>
         {board.map((elem, idx) => (
           <div key={elem.id}>
             <hr />
             <div style={{ display: "flex" }}>
-              <BoardDelete deleteItem={deleteBoard} idx={idx} />
+              <BoardUpdate 
+                updateBoard={updateBoard} 
+                idx={idx}
+                title={elem.title}
+                content={elem.content}
+                nickname={elem.nickname} />
               <span style={{ margin: "0 0.1em" }}></span>
-              <BoardUpdate obj={board} setObj={setBoard} idx={idx} />
+              <BoardDelete deleteItem={deleteBoard} idx={idx} />
             </div>
-
-            <h3>{elem.title}</h3>
-            <p>{elem.nickname}</p>
-            <p>{elem.content}</p>
             <hr />
           </div>
         ))}

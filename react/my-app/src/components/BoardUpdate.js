@@ -1,70 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function BoardUpdate(props) {
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [display, setDisplay] = useState("none");
-  const toggleDisplay = () => {
-    if (display === "none") {
-      setDisplay("block");
-    } else {
-      setDisplay("none");
-    }
-  };
+  const [content, setContent] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    setNickname(props.nickname);
+  }, []);
+
+  useEffect(() => {
+    setTitle(props.title);
+    setContent(props.content);
+    setNickname(props.nickname);
+  }, [props.title, props.content]);
 
   return (
     <div>
       <button
         onClick={(e) => {
           {
-            if (display === "block") {
-              props.obj[props.idx].title = title;
-              props.obj[props.idx].body = body;
-              props.setObj(Object.assign({}, props.obj));
+            if (!disabled) {
+              if (title.length > 0)
+                props.updateBoard(props.idx, title, content);
             }
-            toggleDisplay();
+            setDisabled(!disabled);
           }
         }}
       >
         update
       </button>
-      <div style={{ display: display }}>
-        <input
+      <div>
+        <input style={{ 
+            backgroundColor: 'transparent', border: 'none', outline: 'none',
+            fontSize: '20px', fontWeight: 'bold'
+          }}
           type="text"
-          placeholder="title"
+          placeholder={title}
+          value={title}
+          disabled={disabled}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
-          onBlur={() => {
-            props.obj[props.idx].title = title;
-            props.setObj(Object.assign({}, props.obj));
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              {
-                props.obj[props.idx].title = title;
-                props.setObj(Object.assign({}, props.obj));
-              }
-            }
-          }}
         ></input>
-        <input
+        <p>{nickname}</p>
+        <input style={{ 
+            backgroundColor: 'transparent', border: 'none', outline: 'none',
+            fontSize: '15px'
+          }}
           type="text"
-          placeholder="body"
+          placeholder={content}
+          value={content}
+          disabled={disabled}
           onChange={(e) => {
-            setBody(e.target.value);
-          }}
-          onBlur={() => {
-            props.obj[props.idx].body = body;
-            props.setObj(Object.assign({}, props.obj));
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              {
-                props.obj[props.idx].body = body;
-                props.setObj(Object.assign({}, props.obj));
-              }
-            }
+            setContent(e.target.value);
           }}
         ></input>
       </div>

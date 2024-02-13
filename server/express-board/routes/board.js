@@ -24,8 +24,6 @@ function authenticate(req, res, next) {
   };
 
 router.get('/', authenticate, function(req, res, next){
-    console.log("req.user.nickname: ", req.user.nickname);
-    
     Board.find().populate({
         path: 'author',
         select: 'nickname'
