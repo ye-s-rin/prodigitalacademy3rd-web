@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { signup } from '~/lib/apis/auth';
 
 export default function BoardSignupPage() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const navigate = useNavigate();
 
+    const handleSignup = () => {
+        console.log('Sign up:', { email, password, nickname });
+        signup(email, password, nickname)
+            .then((res) => { console.log(res); navigate('/'); })
+            .catch((err) => console.log(err));
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('Submitted:', { username, password, nickname });
+        handleSignup();
     };
 
     return (
@@ -21,8 +29,8 @@ export default function BoardSignupPage() {
                     <Form.Control
                         type="text"
                         placeholder="Enter username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </Form.Group>
 

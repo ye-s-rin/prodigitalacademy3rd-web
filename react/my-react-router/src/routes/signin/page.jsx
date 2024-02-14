@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { login } from '~/lib/apis/login';
+import { signin } from '~/lib/apis/auth';
 
-export default function BoardLoginPage() {
-    const [username, setUsername] = useState('');
+export default function BoardSigninPage() {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        console.log('Logged in:', { username, password });
-        login(username, password)
+    const handleSignin = () => {
+        console.log('Sign in:', { email, password });
+        signin(email, password)
             .then((res) => { console.log(res); navigate('/'); })
             .catch((err) => console.log(err));
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        handleLogin();
+        handleSignin();
     };
 
     return (
@@ -28,8 +28,8 @@ export default function BoardLoginPage() {
                     <Form.Control
                         type="text"
                         placeholder="Enter username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </Form.Group>
 
@@ -44,7 +44,7 @@ export default function BoardLoginPage() {
                 </Form.Group>
 
                 <Button variant="dark" type="submit">
-                    Login
+                    Sign in
                 </Button>
             </Form>
         </Container>

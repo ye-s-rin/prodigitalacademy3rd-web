@@ -4,7 +4,7 @@ import MainPage from '~/routes/page';
 import BoardListPage from '~/routes/board/page';
 import BoardLayout from '~/routes/board/layout';
 import BoardDetailPage from '~/routes/board/detail/page';
-import BoardLoginPage from '~/routes/login/page';
+import BoardSigninPage from '~/routes/signin/page';
 import BoardSignupPage from '~/routes/signup/page';
 
 const router = createBrowserRouter([
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
             {
                 path: '/signin',
                 index: true,
-                element: <BoardLoginPage />,
+                element: <BoardSigninPage />,
             },
             {
                 path: '/signup',

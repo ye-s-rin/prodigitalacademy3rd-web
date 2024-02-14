@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/User");
-const {createToken, verifyToken} = require("../utils/auth");
+const { createToken, verifyToken } = require("../utils/auth");
 
 router.post("/signup", async (req, res, next) => {
-    try {
-        const { email, password } = req.body;
-        console.log(req.body);
-        const user = await User.signUp(email, password);
-        res.status(201).json(user);
-    } catch (err) {
-        console.error(err);
-        res.status(400);
-        next(err);
-    }
+  try {
+    const { email, password, nickname } = req.body;
+    console.log(req.body);
+    const user = await User.signUp(email, password, nickname);
+    res.status(201).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(400);
+    next(err);
+  }
 });
 
 router.post("/login", async (req, res, next) => {
@@ -29,14 +29,14 @@ router.post("/login", async (req, res, next) => {
       httpOnly: true,
       maxAge: tokenMaxAge * 1000,
     });
-    
+
     console.log(user);
     res.status(201).json(user);
-    } catch (err) {
-      console.error(err);
-      res.status(400);
-      next(err);
-    }
+  } catch (err) {
+    console.error(err);
+    res.status(400);
+    next(err);
+  }
 });
 
 router.all("/logout", async (req, res, next) => {
@@ -45,14 +45,14 @@ router.all("/logout", async (req, res, next) => {
     const user = await User.login(email, password);
     const tokenMaxAge = 60 * 60 * 24 * 3;
     const token = createToken(user, tokenMaxAge);
-    
+
     user.token = token;
 
     res.cookie("authToken", token, {
       httpOnly: true,
       expires: new Date(Date.now()),
     });
-    res.json({message: "로그아웃 완료"});
+    res.json({ message: "로그아웃 완료" });
 
     console.log(user);
     res.status(201).json(user);
@@ -73,7 +73,7 @@ async function authenticate(req, res, next) {
 
   const user = verifyToken(token);
   req.user = user;
-  
+
   if (!user) {
     const error = new Error("Authorization Failed");
     error.status = 403;
@@ -89,11 +89,11 @@ router.get("/protected", authenticate, async (req, res, next) => {
 
 router.post("/", authenticate, async (req, res, next) => {
   console.log(req.user);
-  const id=req.body.id;
+  const id = req.body.id;
 
   User.findById(id)
-    .then(data=>{res.json(data.nickname)})
-    .catch(err=>{next(err)});
+    .then(data => { res.json(data.nickname) })
+    .catch(err => { next(err) });
 });
 
 module.exports = router;
