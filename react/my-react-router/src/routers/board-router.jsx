@@ -5,7 +5,8 @@ import BoardWritePage from '~/routes/board/write/page';
 const router = boardRouter([
     {
         path: '/',
-        element: <MainPage />,
+        // element: <MainPage />,
+        element: <BoardLayout />,
         index: true,
     },
     {
@@ -16,6 +17,11 @@ const router = boardRouter([
                 path: '',
                 index: true,
                 element: <BoardListPage />,
+            },
+            {
+                path: ':boardId',
+                index: true,
+                element: <BoardDetailPage />,
             },
         ],
     },

@@ -1,28 +1,13 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { mainRoutes } from './routers/main-router';
-function renderRoutes(routesObj) {
-  return routesObj.map((route) => {
-    if (route.children) {
-      return (
-        <Route key={route.path} path={route.path} index={route.index} e
-          lement={route.element}>
-          {route.children ? renderRoutes(route.children) : null}
-        </Route>
-      );
-    }
-    return <Route key={route.path} path={route.path} index={route.index
-    } element={route.element} />;
-  });
-}
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import mainRouter from "./routers/main-router";
+import BoardListPage from "./routes/board/page";
 
 function App() {
   return (
-    <div className='min-vh-100'>
-      <BrowserRouter>
-        <Routes>{renderRoutes(mainRoutes)}</Routes>
-      </BrowserRouter>
-    </div>
+    <RouterProvider router={mainRouter}>
+      <BoardListPage />
+    </RouterProvider>
   );
 }
-
 export default App;

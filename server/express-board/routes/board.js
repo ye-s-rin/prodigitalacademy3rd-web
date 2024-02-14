@@ -1,69 +1,69 @@
 const express = require('express');
 const router = express.Router();
 const Board = require("../models/Board");
-const {createToken, verifyToken} = require("../utils/auth");
+const { createToken, verifyToken } = require("../utils/auth");
 
 function authenticate(req, res, next) {
     let token = req.cookies.authToken;
     let headerToken = req.headers.authorization;
 
     if (!token && headerToken) {
-      token = headerToken.split(" ")[1];
+        token = headerToken.split(" ")[1];
     }
-  
+
     const user = verifyToken(token);
 
     req.user = user;
-    
+
     if (!user) {
-      const error = new Error("Authorization Failed");
-      error.status = 403;
-      next(error);
+        const error = new Error("Authorization Failed");
+        error.status = 403;
+        next(error);
     }
     next();
-  };
+};
 
-router.get('/', authenticate, function(req, res, next){
+router.get('/', function (req, res, next) { // authenticate, 
     Board.find().populate({
         path: 'author',
         select: 'nickname'
     })
-    .then(data=>{res.json(data)})
-    .catch(err=>(next(err)));
+        .then(data => { res.json(data) })
+        .catch(err => (next(err)));
 });
 
-router.post('/', authenticate, (req, res, next)=>{
+router.post('/', authenticate, (req, res, next) => {
     Board.create({
         title: req.body.title,
         author: req.body.author || 'Anonymous',
         content: req.body.content,
     })
-    .then(data=>{res.json(data)})
-    .catch(err=>{next(err)});
+        .then(data => { res.json(data) })
+        .catch(err => { next(err) });
 });
 
-router.put('', authenticate, (req, res, next)=>{
+router.put('', authenticate, (req, res, next) => {
     console.log(req.body);
-    const id=req.body.id;
-    const title=req.body.title;
-    const content=req.body.content;
+    const id = req.body.id;
+    const title = req.body.title;
+    const content = req.body.content;
 
-    Board.findById(id).then(data=>{
+    Board.findById(id).then(data => {
         data.title = title;
         data.content = content;
-        data.save().then(data=>{
+        data.save().then(data => {
             return res.json(data)
         })
     })
 });
 
-router.delete('/', authenticate, (req, res, next)=>{
-    console.log("request body: ",req.body);
+router.delete('/', authenticate, (req, res, next) => {
+    console.log("request body: ", req.body);
     const id = req.body.id;
 
     Board.findByIdAndDelete(id)
-    .then(data=>{res.json(data)})
-    .catch(err=>{next(err)});
+        .then(data => { res.json(data) })
+        .catch(err => { next(err) });
 });
 
 // router.get("/:paramId", (req, res, next) => {
