@@ -51,8 +51,8 @@ async function fetchPageData(url) {
 
   const html = await fetchPageData(url);
   const list = html.data.list
-  
-  for(const el of list){
+
+  for (const el of list) {
     data.push({
       title: el.title,
       photoUrl: el.photoUrl,

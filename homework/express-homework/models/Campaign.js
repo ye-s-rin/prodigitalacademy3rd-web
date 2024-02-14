@@ -8,7 +8,7 @@ const CampaignSchema = new mongoose.Schema({
     photoUrl: { type: String },
     nickname: { type: String },
     coreMessage: { type: String },
-    whenOpen: { type: String }, // type: Date
+    whenOpen: { type: Date },
     achievementRate: { type: Number },
 })
 
