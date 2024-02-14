@@ -1,5 +1,8 @@
 module.exports = {
-  plugins: ['react-refresh'],
+  plugins: [
+    'react-refresh',
+    'import',
+  ],
   rules: {
     'react/jsx-no-target-blank': 'off',
     'react-refresh/only-export-components': [
@@ -7,6 +10,22 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "react/prop-types": "off",
-    "no-unused-vars": 0,
+    "no-unused-vars": "off",
+    "import/order": [
+      "error", {}
+    ],
   },
-}
+  overrides: [
+    {
+      files: ['**/*.ts?(x)'],
+      parser: '@typescript-eslint/parser',
+    },
+    {
+      files: ['**/*.js?(x)'],
+      parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 2015,
+      },
+    },
+  ],
+};
