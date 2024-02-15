@@ -39,29 +39,18 @@ const fetchCommentData = async (url) => {
 };
 
 (async () => {
-    const homeUrl = "https://service.wadiz.kr/";
-    let url = homeUrl + "api/search/funding";
+    let url = "";
     const detailUrls = JSON.parse(fs.readFileSync('detailurl.json'));
+    const communities = [];
 
-    // const html = await fetchCampaignData(url);
+    for (const el of detailUrls) {
+        const html = await fetchCommentData(url);
 
-    // for (const el of html.data.list) {
-    //     campaigns.push({
-    //         campaignId: el.campaignId,
-    //         categoryName: el.categoryName,
-    //         title: el.title,
-    //         totalBackedAmount: el.totalBackedAmount,
-    //         photoUrl: el.photoUrl,
-    //         nickname: el.nickName,
-    //         coreMessage: el.coreMessage,
-    //         whenOpen: el.whenOpen,
-    //         achievementRate: el.achievementRate,
-    //     })
+        // campaigns.push({
+        //     communityUrl: 
+        // })
+    }
 
-    //     detailUrls.push({ detailUrl: el.landingUrl })
-    // }
-
-    console.log(detailUrls);
-    // fs.writeFileSync("./campaign.json", JSON.stringify(campaigns));
-    // fs.writeFileSync("./detailUrl.json", JSON.stringify(detailUrls));
+    console.log(communities);
+    // fs.writeFileSync("./communities.json", JSON.stringify(communities));
 })();
