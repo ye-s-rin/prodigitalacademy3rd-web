@@ -11,8 +11,8 @@ export default function BoardSigninPage() {
     const handleSignin = () => {
         console.log('Sign in:', { email, password });
         signin(email, password)
-            .then((res) => { console.log(res); navigate('/'); })
-            .catch((err) => console.log(err));
+            .then((res) => { console.log(res); navigate('/'); localStorage.setItem("signin", "none") })
+            .catch((err) => { console.log(err); localStorage.setItem("signin", "flex") });
     };
 
     const handleSubmit = (event) => {
