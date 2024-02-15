@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Nav, NavDropdown, Navbar, Offcanvas } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
+import { logout } from '~/lib/apis/auth';
 const EXPAND_BREAKPOINT = 'md';
 
 export default function MyNavbar({ brandTitle, offCanvasTitle }) {
-    const [display, setDisplay] = useState("flex");
-    const location = useLocation();
+    const [display, setDisplay] = useState(localStorage.getItem("signin"));
 
-    useEffect(() => {
+    function handleStorageChange() {
+        console.log("test")
         let dis = localStorage.getItem("signin");
-        if (dis != null) { setDisplay(dis); };
-    }, [localStorage.getItem("signin")]);
+        console.log(dis)
+        if (dis != null && dis != undefined) {
+            setDisplay(dis);
+        }
+        else {
+            setDisplay("flex");
+        }
+    }
+    useEffect(() => {
+        console.log("change effect")
+        window.addEventListener('storage', handleStorageChange);
+        console.log(display)
+    }, []);
 
     const handleLogout = () => {
-        localStorage.setItem("signin", "flex");
+        logout()
+            .then((res) => localStorage.setItem("signin", "flex"))
+            .catch((err) => console.log(err))
     };
-
-    console.log("display: ", display);
-    console.log("local storage: ", localStorage.getItem("signin"))
 
     return (
         <Navbar expand={EXPAND_BREAKPOINT} className='mb-3' sticky='top' bg='dark' variant='dark'>
