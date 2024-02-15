@@ -31,7 +31,7 @@ const payload = {
     "startNum": 0,
 };
 
-const fetchCampaignData = async (url) => {
+const fetchCommentData = async (url) => {
     const html = await axios.post(url, payload)
         .then((res) => res.data)
         .catch((err) => console.log(err));
@@ -41,29 +41,27 @@ const fetchCampaignData = async (url) => {
 (async () => {
     const homeUrl = "https://service.wadiz.kr/";
     let url = homeUrl + "api/search/funding";
-    const campaigns = [];
-    const detailUrls = [];
+    const detailUrls = JSON.parse(fs.readFileSync('detailurl.json'));
 
-    const html = await fetchCampaignData(url);
+    // const html = await fetchCampaignData(url);
 
-    for (const el of html.data.list) {
-        campaigns.push({
-            campaignId: el.campaignId,
-            categoryName: el.categoryName,
-            title: el.title,
-            totalBackedAmount: el.totalBackedAmount,
-            photoUrl: el.photoUrl,
-            nickname: el.nickName,
-            coreMessage: el.coreMessage,
-            whenOpen: el.whenOpen,
-            achievementRate: el.achievementRate,
-        })
+    // for (const el of html.data.list) {
+    //     campaigns.push({
+    //         campaignId: el.campaignId,
+    //         categoryName: el.categoryName,
+    //         title: el.title,
+    //         totalBackedAmount: el.totalBackedAmount,
+    //         photoUrl: el.photoUrl,
+    //         nickname: el.nickName,
+    //         coreMessage: el.coreMessage,
+    //         whenOpen: el.whenOpen,
+    //         achievementRate: el.achievementRate,
+    //     })
 
-        detailUrls.push({ detailUrl: el.landingUrl })
-    }
+    //     detailUrls.push({ detailUrl: el.landingUrl })
+    // }
 
-    console.log(campaigns);
     console.log(detailUrls);
-    fs.writeFileSync("./campaign.json", JSON.stringify(campaigns));
-    fs.writeFileSync("./detailUrl.json", JSON.stringify(detailUrls));
+    // fs.writeFileSync("./campaign.json", JSON.stringify(campaigns));
+    // fs.writeFileSync("./detailUrl.json", JSON.stringify(detailUrls));
 })();
