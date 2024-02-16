@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { signin } from '~/lib/apis/auth';
+import useAuth from '~/lib/hooks/useAuth';
 
 export default function BoardSigninPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { clientLogin } = useAuth(); // 전역 State
 
     const handleSignin = () => {
         console.log('Sign in:', { email, password });
         signin(email, password)
             .then((res) => {
-                console.log(res); navigate('/');
-                localStorage.setItem("signin", "none");
+                console.log(res);
+                const user = res;
+                if (user.token) {
+                    delete user.token;
+                    clientLogin(user); // 로그인 정보 전역 State에 저장
+                    navigate('/');
+                };
             })
-            .catch((err) => { console.log(err); localStorage.setItem("signin", "flex") });
+            .catch((err) => console.log(err));
     };
 
     const handleSubmit = (event) => {
-        console.log("login start")
         event.preventDefault();
         handleSignin();
     };

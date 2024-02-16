@@ -2,17 +2,24 @@ import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { signup } from '~/lib/apis/auth';
+import useAuth from '~/lib/hooks/useAuth';
 
 export default function BoardSignupPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const navigate = useNavigate();
+    const { clientLogin } = useAuth(); // 전역 State
 
     const handleSignup = () => {
         console.log('Sign up:', { email, password, nickname });
         signup(email, password, nickname)
-            .then((res) => { console.log(res); navigate('/'); })
+            .then((res) => {
+                console.log(res);
+                const user = res;
+                clientLogin(user); // 로그인 정보 전역 State에 저장
+                navigate('/');
+            })
             .catch((err) => console.log(err));
     };
 

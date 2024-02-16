@@ -2,31 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Container, Nav, NavDropdown, Navbar, Offcanvas } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '~/lib/apis/auth';
+import useAuth from '~/lib/hooks/useAuth';
 const EXPAND_BREAKPOINT = 'md';
 
 export default function MyNavbar({ brandTitle, offCanvasTitle }) {
-    const [display, setDisplay] = useState(localStorage.getItem("signin"));
+    const [display, setDisplay] = useState("flex");
+    const { user, clientLogin, clientLogout } = useAuth(); // 전역 State
 
-    function handleStorageChange() {
-        console.log("test")
-        let dis = localStorage.getItem("signin");
-        console.log(dis)
-        if (dis != null && dis != undefined) {
-            setDisplay(dis);
+    useEffect(() => {
+        if (user !== null) {
+            setDisplay("none");
         }
         else {
             setDisplay("flex");
         }
-    }
-    useEffect(() => {
-        console.log("change effect")
-        window.addEventListener('storage', handleStorageChange);
-        console.log(display)
-    }, []);
+    }, [user]);
 
     const handleLogout = () => {
         logout()
-            .then((res) => localStorage.setItem("signin", "flex"))
+            .then((res) => { clientLogout(); })
             .catch((err) => console.log(err))
     };
 
