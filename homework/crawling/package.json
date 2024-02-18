@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "axios": "^1.6.7",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "fs": "0.0.1-security",
+    "zlib": "^1.0.5"
   },
   "name": "crawling",
   "version": "1.0.0",

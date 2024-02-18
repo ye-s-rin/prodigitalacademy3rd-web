@@ -31,14 +31,16 @@ const fetchCommentData = async (url) => {
 
 (async () => {
     const homeUrl = "https://www.wadiz.kr/web/reward/api/comments/campaigns/";
-    const queryString = "?page=0&size=2&commentGroupType=CAMPAIGN&rewardCommentType=" // size=40으로 변경
+    const queryString = "?page=0&size=40&commentGroupType=CAMPAIGN&rewardCommentType="
     let url = "";
-    const campaigns = JSON.parse(fs.readFileSync('campaign2.json')); // campaign.json로 변경
+    const campaigns = JSON.parse(fs.readFileSync('campaign.json'));
     const comments = [];
 
     for (const campaign of campaigns) {
         url = homeUrl + campaign.campaignId + queryString;
         const html = await fetchCommentData(url);
+
+        console.log(url);
 
         for (const comment of html.data.content) {
             const recomments = [];
@@ -68,9 +70,9 @@ const fetchCommentData = async (url) => {
         };
     }
 
-    console.log(comments);
-    for (const comment of comments) {
-        console.log(comment.commentReplys);
-    }
+    // console.log(comments);
+    // for (const comment of comments) {
+    //     console.log(comment.commentReplys);
+    // }
     fs.writeFileSync("./comment.json", JSON.stringify(comments));
 })();
