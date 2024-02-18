@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as cheerio from "cheerio";
 import fs from "fs";
 
 const headers = {
@@ -42,7 +41,6 @@ const fetchCampaignData = async (url) => {
     const homeUrl = "https://service.wadiz.kr/";
     let url = homeUrl + "api/search/funding";
     const campaigns = [];
-    const detailUrls = [];
 
     const html = await fetchCampaignData(url);
 
@@ -58,12 +56,8 @@ const fetchCampaignData = async (url) => {
             whenOpen: el.whenOpen,
             achievementRate: el.achievementRate,
         })
-
-        detailUrls.push({ detailUrl: el.landingUrl })
     }
 
     console.log(campaigns);
-    console.log(detailUrls);
     fs.writeFileSync("./campaign.json", JSON.stringify(campaigns));
-    fs.writeFileSync("./detailUrl.json", JSON.stringify(detailUrls));
 })();
