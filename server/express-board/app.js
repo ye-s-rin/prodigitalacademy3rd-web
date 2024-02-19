@@ -61,6 +61,9 @@ app.post('/sample', (req, res) => {
 const boardRouter = require('./routes/board.js');
 app.use('/api/board', boardRouter);
 
+const commentRouter = require('./routes/comment.js');
+app.use('/api/comment', commentRouter);
+
 const birdsRouter = require('./routes/birds.js');
 app.use('/birds', birdsRouter);
 

@@ -6,3 +6,9 @@ export async function fetchBoardList() {
 
     return response.data;
 };
+
+export async function fetchBoard(boardId) {
+    const response = await instance.get(`/board/${boardId}`);
+
+    return response.data;
+};

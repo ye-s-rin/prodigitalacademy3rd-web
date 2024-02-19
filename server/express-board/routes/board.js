@@ -23,7 +23,19 @@ function authenticate(req, res, next) {
     next();
 };
 
-router.get('/', function (req, res, next) { // authenticate, 
+router.get('/:id', authenticate, function (req, res, next) {
+    const id = req.params.id;
+    console.log(id);
+
+    Board.findById(id).populate({
+        path: 'author',
+        select: 'nickname'
+    })
+        .then(data => { res.json(data) })
+        .catch(err => (next(err)));
+});
+
+router.get('/', authenticate, function (req, res, next) {
     Board.find().populate({
         path: 'author',
         select: 'nickname'

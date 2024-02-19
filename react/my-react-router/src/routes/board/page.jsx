@@ -10,7 +10,6 @@ export default function BoardListPage() {
         fetchBoardList().then((res) => setBoardList(res));
     }, []);
 
-    console.log(boardList);
     return (
         <Container className="min-vh-100">
             <h1>My Board</h1>
@@ -23,7 +22,6 @@ export default function BoardListPage() {
                                 <div>{board.content}</div>
                             </div>
                             <Badge bg='primary' pill>
-                                {/* 14 */}
                             </Badge>
                         </ListGroup.Item>
                     </Link>
