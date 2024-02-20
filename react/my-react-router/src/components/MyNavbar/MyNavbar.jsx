@@ -67,6 +67,9 @@ export default function MyNavbar({ brandTitle, offCanvasTitle }) {
                             <Link to='/board' className="text-decoration-none">
                                 <Nav.Link as="div">게시판</Nav.Link>
                             </Link>
+                            <Link to='/todo' className="text-decoration-none">
+                                <Nav.Link as="div">Todo</Nav.Link>
+                            </Link>
                         </Nav>
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>

@@ -6,6 +6,7 @@ import BoardLayout from '~/routes/board/layout';
 import BoardDetailPage from '~/routes/board/detail/page';
 import BoardSigninPage from '~/routes/signin/page';
 import BoardSignupPage from '~/routes/signup/page';
+import Todo from '../features/todo/Todo';
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
                 path: '/signup',
                 index: true,
                 element: <BoardSignupPage />,
+            },
+            {
+                path: '/todo',
+                indx: true,
+                element: <Todo />
             },
             ]
     }
