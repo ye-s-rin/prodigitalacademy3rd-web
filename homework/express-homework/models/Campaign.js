@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CampaignSchema = new mongoose.Schema({
-    campaignId: { type: String, required: true },
+    campaignId: { type: Number, required: true },
     categoryName: { type: String },
     title: { type: String },
     totalBackedAmount: { type: Number },

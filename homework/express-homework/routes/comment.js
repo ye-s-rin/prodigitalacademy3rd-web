@@ -54,9 +54,9 @@ router.post('/', async (req, res, next) => {
         for (const reply of comment.commentReplys) { // 자식 댓글 먼저 생성
             const recomment = await Comment.create({
                 body: reply.body,
-                Campaign: reply.campaignId,
+                Campaign: reply.Campaign,
                 commentType: reply.commentType,
-                userNickname: reply.userNickname,
+                userNickname: reply.userNickname || '익명',
                 whenCreated: reply.whenCreated,
                 commentReplys: reply.commentReplys,
                 depth: reply.depth
@@ -67,9 +67,9 @@ router.post('/', async (req, res, next) => {
 
         Comment.create({
             body: comment.body,
-            Campaign: comment.campaignId,
+            Campaign: comment.Campaign,
             commentType: comment.commentType,
-            userNickname: comment.userNickname,
+            userNickname: comment.userNickname || '익명',
             whenCreated: comment.whenCreated,
             commentReplys: recomments,
             depth: comment.depth
@@ -86,9 +86,9 @@ const pushComment = async (comments) => {
         for (const reply of comment.commentReplys) { // 자식 댓글 먼저 생성
             const recomment = await Comment.create({
                 body: reply.body,
-                Campaign: reply.campaignId,
+                Campaign: reply.Campaign,
                 commentType: reply.commentType,
-                userNickname: reply.userNickname,
+                userNickname: reply.userNickname || '익명',
                 whenCreated: reply.whenCreated,
                 commentReplys: reply.commentReplys,
                 depth: reply.depth
@@ -99,9 +99,9 @@ const pushComment = async (comments) => {
 
         Comment.create({
             body: comment.body,
-            Campaign: comment.campaignId,
+            Campaign: comment.Campaign,
             commentType: comment.commentType,
-            userNickname: comment.userNickname,
+            userNickname: comment.userNickname || '익명',
             whenCreated: comment.whenCreated,
             commentReplys: recomments,
             depth: comment.depth

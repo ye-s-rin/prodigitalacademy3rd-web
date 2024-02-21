@@ -48,7 +48,7 @@ const fetchCommentData = async (url) => {
             for (const reply of comment.commentReplys) {
                 recomments.push({
                     body: reply.body,
-                    Campaign: reply.campaignId,
+                    Campaign: reply.commonId,
                     commentType: reply.commentType,
                     userNickname: reply.nickName,
                     whenCreated: reply.whenCreated,
@@ -59,7 +59,7 @@ const fetchCommentData = async (url) => {
 
             comments.push({
                 body: comment.body,
-                Campaign: campaign.campaignId,
+                Campaign: comment.commonId,
                 commentType: comment.commentType,
                 userNickname: comment.nickName,
                 whenCreated: comment.whenCreated,

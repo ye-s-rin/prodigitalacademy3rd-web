@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CommentSchema = new mongoose.Schema({
     body: { type: String, required: true },
-    Campaign: { type: mongoose.Schema.Types.ObjectId, ref: 'Campaign', field: 'campaignId' },
+    Campaign: { type: Number, ref: 'Campaign', field: 'campaignId' },
     commentType: { type: String },
     userNickname: { type: String, required: true },
     whenCreated: { type: Date },

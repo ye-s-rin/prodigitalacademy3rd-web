@@ -2,6 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const Campaign = require("../models/Campaign");
+const Comment = require("../models/Comment");
 
 router.get('/campaign', function (req, res, next) {
     Campaign.find()
@@ -13,8 +14,19 @@ router.get('/:campaignId', function (req, res, next) {
     const campaignId = req.params.campaignId;
 
     Campaign.find({ campaignId: campaignId })
-        .then(data => { res.json(data) })
-        .catch(err => (next(err)));
+        .then(campaign => {
+            Comment.find({ Campaign: campaignId, depth: 0 })
+                .populate('commentReplys')
+                .then(comments => {
+                    res.json({ campaign: campaign, comments: comments });
+                })
+                .catch(err => {
+                    next(err);
+                });
+        })
+        .catch(err => {
+            next(err);
+        });
 });
 
 router.post('/', (req, res, next) => {
