@@ -1,11 +1,11 @@
 import { combineReducers, createStore } from "redux";
 import todoReducer from "./reducers/todo";
 import { configureStore } from "@reduxjs/toolkit";
-import { logger } from "react-logger";
-import myMid from "./middlewares/myMiddleware";
+import { logger } from "redux-logger";
+import { myMiddleware, timeoutScheduler } from "./middlewares/myMiddleware";
 
 const myMiddlewares = [
-    logger, myMid
+    logger, myMiddleware, timeoutScheduler
 ];
 
 export const rootReducer = combineReducers({
@@ -15,6 +15,10 @@ export const rootReducer = combineReducers({
 
 const store = configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => {
+        const middlewares = getDefaultMiddleware().concat(myMiddlewares);
+        return middlewares;
+    },
 });
 
 export default store;

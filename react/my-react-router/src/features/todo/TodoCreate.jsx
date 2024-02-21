@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import { InputGroup, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { createTodo } from "../../store/reducers/todo";
@@ -10,16 +10,28 @@ export default function TodoCreate() {
     const inputRef = useRef();
     const [text, setText] = useState("");
 
-    const [cancel, setCancel] = useState(null);
+    const [cancel, setCancel] = useState(() => { });
 
     const handleAdd = useCallback(() => {
-        const action = addTodo({
-            text: text,
-        });
+        const action = createTodo(text);
         action.meta = {
-            delay: 5000,
+            delay: 3000,
         };
-    });
+        const cancelFn = dispatch(action);
+        setCancel(() => cancelFn);
+    }, [dispatch, text]);
+
+    const handleCancel = useCallback(() => {
+        if (cancel) {
+            cancel();
+        }
+        setCancel(null);
+    }, [cancel]);
+
+    useEffect(() => {
+        setCancel(null)
+        inputRef.current.value = "";
+    }, [todoObj.todo])
 
     return (
         <>
@@ -34,9 +46,7 @@ export default function TodoCreate() {
                     onKeyDown={(e) => {
                         if (e.key === "Enter") {
                             if (inputRef.current?.value) {
-                                const action = createTodo(text);
-                                dispatch(action);
-                                inputRef.current.value = "";
+                                handleAdd();
                             }
                         }
                     }}
@@ -45,15 +55,17 @@ export default function TodoCreate() {
                     variant="dark"
                     onClick={(e) => {
                         if (inputRef.current?.value) {
-                            const action = createTodo(text);
-                            console.log(action);
-                            dispatch(action);
-                            inputRef.current.value = "";
+                            handleAdd();
                         }
                     }}
                 >
                     입력
                 </Button>
+                {cancel ? (
+                    <Button variant="danger" onClick={() => handleCancel()}>
+                        실행취소
+                    </Button>
+                ) : null}
             </InputGroup >
             <div></div>
         </>

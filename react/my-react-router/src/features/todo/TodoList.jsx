@@ -6,7 +6,6 @@ import TodoDelete from './TodoDelete';
 
 export default function TodoList() {
     const todoObj = useSelector((state) => state.todo);
-    console.log(todoObj.todo);
 
     return (
         <>
