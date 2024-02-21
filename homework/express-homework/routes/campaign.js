@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const Campaign = require("../models/Campaign");
@@ -28,28 +29,14 @@ router.post('/', (req, res, next) => {
     };
 });
 
-// router.put('', (req, res, next) => {
-//     console.log(req.body);
-//     const id = req.body.id;
-//     const title = req.body.title;
-//     const content = req.body.content;
+const initCampaign = () => {
+    const filePath = '../crawling/campaign.json'
+    const campaigns = JSON.parse(fs.readFileSync(filePath));
 
-//     Board.findById(id).then(data => {
-//         data.title = title;
-//         data.content = content;
-//         data.save().then(data => {
-//             return res.json(data)
-//         })
-//     })
-// });
-
-// router.dcampaignete('/', (req, res, next) => {
-//     console.log("request body: ", req.body);
-//     const id = req.body.id;
-
-//     Board.findByIdAndDcampaignete(id)
-//         .then(data => { res.json(data) })
-//         .catch(err => { next(err) });
-// });
+    Campaign.insertMany(campaigns)
+        .then(data => console.log("init Campaign"))
+        .catch(err => console.log(err));
+};
+// initCampaign();
 
 module.exports = router;
