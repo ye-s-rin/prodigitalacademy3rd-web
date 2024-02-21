@@ -4,14 +4,17 @@ import mainRouter from "./routers/main-router";
 import BoardListPage from "./routes/board/page";
 import AuthProvider from "./components/AuthProvider";
 import { Provider } from "react-redux";
-import store from "./store";
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 
 function App() {
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <RouterProvider router={mainRouter} />
-      </AuthProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <AuthProvider>
+          <RouterProvider router={mainRouter} />
+        </AuthProvider>
+      </PersistGate>
     </Provider>
   );
 }
