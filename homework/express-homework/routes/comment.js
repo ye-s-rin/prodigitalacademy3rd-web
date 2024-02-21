@@ -11,7 +11,7 @@ router.post('/:campaignId/comment', (req, res, next) => {
         body: comment.body,
         Campaign: campaignId,
         commentType: comment.commentType,
-        userNickname: comment.userNickname,
+        userNickname: comment.userNickname || "익명",
         whenCreated: comment.whenCreated,
         commentReplys: null,
         depth: comment.depth
@@ -20,21 +20,27 @@ router.post('/:campaignId/comment', (req, res, next) => {
         .catch(err => { next(err) });
 });
 
-router.post('/:campaignId/comment/:commentId', (req, res, next) => {
+router.post('/:campaignId/comment/:commentId', async (req, res, next) => {
     const campaignId = req.params.campaignId;
     const commentId = req.params.commentId;
     const comment = req.body;
 
-    Comment.create({
+    const recomment = await Comment.create({
         body: comment.body,
         Campaign: campaignId,
         commentType: comment.commentType,
-        userNickname: comment.userNickname,
+        userNickname: comment.userNickname || "익명",
         whenCreated: comment.whenCreated,
         commentReplys: null,
         depth: comment.depth
     })
-        .then(data => { res.json(data) })
+        .then(data => { 
+            return Comment.findOneAndUpdate(
+                {_id: commentId}, 
+                {$push: { commentReplys: recomment._id }}
+                )
+        })
+        .then(data => res.json(data) )
         .catch(err => { next(err) });
 });
 

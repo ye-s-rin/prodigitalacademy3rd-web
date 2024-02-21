@@ -10,6 +10,23 @@ router.get('/campaign', function (req, res, next) {
         .catch(err => (next(err)));
 });
 
+router.post('/:campaignId/comment', (req, res, next) => {
+    const campaignId = req.params.campaignId;
+    const comment = req.body;
+
+    Comment.create({
+        body: comment.body,
+        Campaign: campaignId,
+        commentType: comment.commentType,
+        userNickname: comment.userNickname || "익명",
+        whenCreated: comment.whenCreated,
+        commentReplys: null,
+        depth: comment.depth
+    })
+        .then(data => { res.json(data) })
+        .catch(err => { next(err) });
+});
+
 router.get('/:campaignId', function (req, res, next) {
     const campaignId = req.params.campaignId;
 

@@ -5,7 +5,7 @@ const CommentSchema = new mongoose.Schema({
     Campaign: { type: Number, ref: 'Campaign', field: 'campaignId' },
     commentType: { type: String },
     userNickname: { type: String, required: true },
-    whenCreated: { type: Date },
+    whenCreated: { type: Date, default: Date.now },
     commentReplys: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     depth: { type: Number, required: true }
 })
