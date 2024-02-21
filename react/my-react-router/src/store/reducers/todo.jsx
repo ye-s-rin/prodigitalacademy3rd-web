@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
     todo: [], // {id, text, color}
     color: "white", // input box
+    counter: 0,
 };
 
 // Action Type 정의
@@ -13,10 +14,10 @@ export const UPDATE_TODO = "todo/UPDATE_TODO";
 export const SET_COLOR = "todo/SET_COLOR";
 
 // Action Creator
-export const createTodo = (text, color) => {
+export const createTodo = (text) => {
     return {
         type: CREATE_TODO,
-        payload: { text, color },
+        payload: { text },
     };
 };
 
@@ -27,10 +28,10 @@ export const deleteTodo = (id) => {
     };
 };
 
-export const updateTodo = (id, text, color) => {
+export const updateTodo = (id, text) => {
     return {
         type: UPDATE_TODO,
-        payload: { id, text, color },
+        payload: { id, text },
     };
 };
 
@@ -48,23 +49,26 @@ function todoReducer(state = initialState, action) {
             const newTodo = {
                 id: uuidv4(),
                 text: action.payload.text,
-                color: action.payload.color
+                color: state.color,
             };
             return {
                 ...state,
                 todo: [...state.todo, newTodo],
+                color: "white",
+                counter: state.counter + 1,
             };
         case DELETE_TODO:
             return {
                 ...state,
                 todo: state.todo.filter((item) => item.id !== action.payload.id),
+                counter: state.counter - 1,
             };
         case UPDATE_TODO:
             return {
                 ...state,
                 todo: state.todo.map((item) => {
                     if (item.id === action.payload.id) {
-                        return { ...item, text: action.payload.text, color: action.payload.color };
+                        return { ...item, text: action.payload.text, color: state.color };
                     }
                     return item;
                 }),

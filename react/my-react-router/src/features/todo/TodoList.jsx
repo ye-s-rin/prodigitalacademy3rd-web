@@ -1,16 +1,29 @@
 import React from 'react'
-import { ListGroup } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { InputGroup, ListGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import TodoUpdate from './TodoUpdate';
+import TodoDelete from './TodoDelete';
 
 export default function TodoList() {
-    const counterObj = useSelector((state) => state.counter);
-    const dispatch = useDispatch();
+    const todoObj = useSelector((state) => state.todo);
+    console.log(todoObj.todo);
 
     return (
         <>
             <ListGroup>
-                <ListGroup.Item>
-                </ListGroup.Item>
+                {todoObj.todo.map((elem, idx) => (
+                    <ListGroup.Item
+                        key={elem.id}
+                        style={{ display: 'flex', border: 'none' }}>
+                        <InputGroup>
+                            <TodoUpdate
+                                id={elem.id}
+                                text={elem.text}
+                                color={elem.color} />
+                            <TodoDelete id={elem.id} />
+                        </InputGroup>
+                    </ListGroup.Item>
+                ))}
             </ListGroup>
         </>
     );

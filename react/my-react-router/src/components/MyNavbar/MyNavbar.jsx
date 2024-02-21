@@ -4,10 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { logout } from '~/lib/apis/auth';
 import useAuth from '~/lib/hooks/useAuth';
 const EXPAND_BREAKPOINT = 'md';
+import { useSelector } from 'react-redux';
 
 export default function MyNavbar({ brandTitle, offCanvasTitle }) {
     const [display, setDisplay] = useState("flex");
     const { user, clientLogin, clientLogout } = useAuth(); // 전역 State
+    const todoCount = useSelector((state) => state.todo.counter);
 
     useEffect(() => {
         if (user !== null) {
@@ -68,7 +70,7 @@ export default function MyNavbar({ brandTitle, offCanvasTitle }) {
                                 <Nav.Link as="div">게시판</Nav.Link>
                             </Link>
                             <Link to='/todo' className="text-decoration-none">
-                                <Nav.Link as="div">Todo</Nav.Link>
+                                <Nav.Link as="div">Todo {todoCount}</Nav.Link>
                             </Link>
                         </Nav>
                     </Offcanvas.Body>

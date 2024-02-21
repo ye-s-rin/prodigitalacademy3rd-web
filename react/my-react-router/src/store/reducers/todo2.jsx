@@ -1,22 +1,24 @@
-import { configureStore } from "@reduxjs/toolkit";
-import todosReducer from "./reducers/todo";
-import logger from "redux-logger";
-import { combineReducers } from "redux";
-import counterReducer from "./reducers/counter";
-const myMiddlewares = [
-    logger,
-];
-const rootReducer = combineReducers({
-    todo: todosReducer,
-    counter: counterReducer,
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+    todos: [],
+};
+
+const todosSlice = createSlice({
+    name: "todos",
+    initialState: initialState,
+    reducers: {
+        addTodo(state, action) {
+            // 내부적으로 immer.js 사용 (immutable 유지시켜줌)
+            // return 하지 말자 (화살표함수에서는 return 하면 이상해질 수 있어요.)
+            state.todos.push(action.payload);
+        },
+        removeTodo(state, action) {
+            state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+        },
+    },
 });
-const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => {
-        const middlewares = getDefaultMiddleware().concat(myMiddlewares);
-        console.log("middlewares", middlewares);
-        return middlewares;
-    }
-}
-);
-export default store;
+// action creator
+export const { addTodo, removeTodo } = todosSlice.actions;
+// reducer
+export default todosSlice.reducer;

@@ -13,7 +13,7 @@ export default function Todo() {
             <h1>Todo</h1>
             <TodoCreate />
             <TodoColor />
-            {/* <TodoList /> */}
+            <TodoList />
         </>
     );
 };
