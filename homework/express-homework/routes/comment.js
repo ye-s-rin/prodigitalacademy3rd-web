@@ -3,6 +3,41 @@ const express = require('express');
 const router = express.Router();
 const Comment = require("../models/Comment");
 
+router.post('/:campaignId/comment', (req, res, next) => {
+    const campaignId = req.params.campaignId;
+    const comment = req.body;
+
+    Comment.create({
+        body: comment.body,
+        Campaign: campaignId,
+        commentType: comment.commentType,
+        userNickname: comment.userNickname,
+        whenCreated: comment.whenCreated,
+        commentReplys: null,
+        depth: comment.depth
+    })
+        .then(data => { res.json(data) })
+        .catch(err => { next(err) });
+});
+
+router.post('/:campaignId/comment/:commentId', (req, res, next) => {
+    const campaignId = req.params.campaignId;
+    const commentId = req.params.commentId;
+    const comment = req.body;
+
+    Comment.create({
+        body: comment.body,
+        Campaign: campaignId,
+        commentType: comment.commentType,
+        userNickname: comment.userNickname,
+        whenCreated: comment.whenCreated,
+        commentReplys: null,
+        depth: comment.depth
+    })
+        .then(data => { res.json(data) })
+        .catch(err => { next(err) });
+});
+
 router.get('/', function (req, res, next) {
     Comment.find()
         .populate('commentReplys')

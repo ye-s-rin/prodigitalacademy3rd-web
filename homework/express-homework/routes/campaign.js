@@ -3,8 +3,16 @@ const express = require('express');
 const router = express.Router();
 const Campaign = require("../models/Campaign");
 
-router.get('/', function (req, res, next) {
+router.get('/campaign', function (req, res, next) {
     Campaign.find()
+        .then(data => { res.json(data) })
+        .catch(err => (next(err)));
+});
+
+router.get('/:campaignId', function (req, res, next) {
+    const campaignId = req.params.campaignId;
+
+    Campaign.find({ campaignId: campaignId })
         .then(data => { res.json(data) })
         .catch(err => (next(err)));
 });

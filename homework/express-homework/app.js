@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/api/users', usersRouter);
 
 const campaignRouter = require('./routes/campaign.js');
-app.use('/campaign', campaignRouter);
+app.use('/api', campaignRouter);
 
 const commentRouter = require('./routes/comment.js');
 app.use('/comment', commentRouter);
