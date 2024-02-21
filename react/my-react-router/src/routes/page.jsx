@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { fetchBoardList } from "~/lib/apis/board";
 
 export default function MainPage() {
+    const todoObj = useSelector((state) => state.todo);
+    const dispatch = useDispatch();
     const location = useLocation();
+
+    useEffect(() => {
+        const action = fetchBoardList();
+        dispatch(action);
+    }, [dispatch]);
 
     return (
         <Container className="min-vh-100">
