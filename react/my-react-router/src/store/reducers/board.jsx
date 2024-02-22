@@ -1,45 +1,75 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchBoardList as reqFetchBoardList } from "~/1ib/apis/board";
+import { fetchBoardList as reqFetchBoardList, fetchBoard as reqFetchBoard } from "~/lib/apis/board";
+import { fetchCommentList as reqFetchCommentList } from "~/lib/apis/comment";
 
 const initialState = {
     boards: [],
+    boardDetail: [],
+    comments: [],
     loading: "idle",
 };
 
-const fetchBoardList = createAsyncThunk(
-    "boards/fetchBoardList",
-    async (data, thunkAPI) => {
+export const fetchBoardList = createAsyncThunk(
+    "boards/fetchBoardList", // action type
+    async () => {
         const response = await reqFetchBoardList();
-        return response.data;
+        return response;
+    }
+);
+
+export const fetchBoard = createAsyncThunk(
+    "boards/fetchBoard",
+    async (boardId) => {
+        const response = await reqFetchBoard(boardId);
+        return response;
+    }
+);
+
+export const fetchCommentList = createAsyncThunk(
+    "boards/fetchCommentList",
+    async (boardId) => {
+        const response = await reqFetchCommentList(boardId);
+        return response;
     }
 );
 
 const boardSlice = createSlice({
     name: "boards",
-    initialState: initialState,
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(fetchBoardList.fulfilled, (state, action) => {
-            console.log("fulfilled");
-            console.log(action);
-            state.loading = "fulfilled";
-            state.boards.push(action.payload);
-        });
         builder
-            .addCase(fetchBoardList.pending, (state, action) => {
-                console.log("pending");
-                state.loading = "pending";
-
-                console.log(action);
+            .addCase(fetchBoardList.fulfilled, (state, action) => {
+                state.loading = "fulfilled";
+                state.boards = action.payload;
             })
-            .addCase(fetchBoardList.rejected, (state, action) => {
-                console.log("rejected");
+            .addCase(fetchBoardList.pending, (state) => {
+                state.loading = "pending";
+            })
+            .addCase(fetchBoardList.rejected, (state) => {
                 state.loading = "rejected";
-
-                console.log(action)
+            })
+            .addCase(fetchBoard.fulfilled, (state, action) => {
+                state.loading = "fulfilled";
+                state.boardDetail = action.payload;
+            })
+            .addCase(fetchBoard.pending, (state) => {
+                state.loading = "pending";
+            })
+            .addCase(fetchBoard.rejected, (state) => {
+                state.loading = "rejected";
+            })
+            .addCase(fetchCommentList.fulfilled, (state, action) => {
+                state.loading = "fulfilled";
+                state.comments = action.payload;
+            })
+            .addCase(fetchCommentList.pending, (state) => {
+                state.loading = "pending";
+            })
+            .addCase(fetchCommentList.rejected, (state) => {
+                state.loading = "rejected";
             });
     },
 });
 
-export { fetchBoardList };
 export default boardSlice.reducer;

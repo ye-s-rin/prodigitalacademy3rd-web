@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { fetchBoardList } from "~/lib/apis/board";
+import { fetchBoardList } from "~/store/reducers/board";
 
 export default function MainPage() {
     const todoObj = useSelector((state) => state.todo);

@@ -1,38 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { fetchBoard } from '~/lib/apis/board';
-import { fetchCommentList } from '~/lib/apis/comment';
+import { fetchBoard, fetchCommentList } from '~/store/reducers/board';
 import CommentComponent from './comment';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function BoardDetailPage() {
     let { boardId } = useParams();
-    const [board, setBoard] = useState([]);
-    const [comments, setComments] = useState([]);
+    const dispatch = useDispatch();
+    const boardDetail = useSelector(state => state.board.boardDetail);
+    const comments = useSelector(state => state.board.comments);
 
     useEffect(() => {
-        fetchBoard(boardId)
-            .then((res) => {
-                setBoard(res);
-            });
-        fetchCommentList(boardId)
-            .then((res) => {
-                console.log(res);
-                setComments(res);
-            })
+        const boardAction = fetchBoard(boardId);
+        dispatch(boardAction);
+
+        const commentAction = fetchCommentList(boardId);
+        dispatch(commentAction);
     }, []);
 
     const onAddComment = () => { };
 
     return (
         <Container className="min-vh-100">
-            <h1>{board?.title}</h1>
+            <h1>{boardDetail?.title}</h1>
             <div style={{ display: "flex", color: "gray", fontSize: "smaller" }}>
-                <p>{board?.author?.nickname}</p>
+                <p>{boardDetail?.author?.nickname}</p>
                 &#8195;
-                <p>{board?.createdAt}</p>
+                <p>{boardDetail?.createdAt}</p>
             </div>
-            <p>{board?.content}</p>
+            <p>{boardDetail?.content}</p>
 
             <CommentComponent comments={comments} onAddComment={onAddComment} />
         </Container>

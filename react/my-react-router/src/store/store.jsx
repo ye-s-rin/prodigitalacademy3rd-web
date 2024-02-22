@@ -1,5 +1,6 @@
 import { combineReducers, createStore } from "redux";
 import todoReducer from "./reducers/todo";
+import boardReducer from "./reducers/board"
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import { myMiddleware, timeoutScheduler } from "./middlewares/myMiddleware";
@@ -28,6 +29,7 @@ const rootReducer = persistReducer(
     rootPersistConfig,
     combineReducers({
         todo: todoReducer,
+        board: boardReducer,
     })
 );
 

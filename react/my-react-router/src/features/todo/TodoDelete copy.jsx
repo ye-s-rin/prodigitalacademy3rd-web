@@ -3,6 +3,7 @@ import React from 'react'
 export default function TodoDelete() {
     const [text, setText] = "" // article 
     // 안녕하세요. 블록딜로 장외처분했습니다.
+
     // token1: 안녕하세요. "type": "normal"
     // token2: 블록딜 "type": "tooltip"
     // token3: 로 "type": "normal"
@@ -10,12 +11,12 @@ export default function TodoDelete() {
     // token5: 했습니다."type": "normal"
     const [tooltip, setTooltip] = [{
         start: 7,
-        end: 9,
+        end: 10,
         desc: "블록딜 설명"
     },
     {
         start: 12,
-        end: 15,
+        end: 16,
         desc: "장외처분 설명"
     }
     ]
