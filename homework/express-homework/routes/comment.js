@@ -3,47 +3,6 @@ const express = require('express');
 const router = express.Router();
 const Comment = require("../models/Comment");
 
-router.post('/:campaignId/comment', (req, res, next) => {
-    const campaignId = req.params.campaignId;
-    const comment = req.body;
-
-    Comment.create({
-        body: comment.body,
-        Campaign: campaignId,
-        commentType: comment.commentType,
-        userNickname: comment.userNickname || "익명",
-        whenCreated: comment.whenCreated,
-        commentReplys: null,
-        depth: comment.depth
-    })
-        .then(data => { res.json(data) })
-        .catch(err => { next(err) });
-});
-
-router.post('/:campaignId/comment/:commentId', async (req, res, next) => {
-    const campaignId = req.params.campaignId;
-    const commentId = req.params.commentId;
-    const comment = req.body;
-
-    const recomment = await Comment.create({
-        body: comment.body,
-        Campaign: campaignId,
-        commentType: comment.commentType,
-        userNickname: comment.userNickname || "익명",
-        whenCreated: comment.whenCreated,
-        commentReplys: null,
-        depth: comment.depth
-    })
-        .then(data => { 
-            return Comment.findOneAndUpdate(
-                {_id: commentId}, 
-                {$push: { commentReplys: recomment._id }}
-                )
-        })
-        .then(data => res.json(data) )
-        .catch(err => { next(err) });
-});
-
 router.get('/', function (req, res, next) {
     Comment.find()
         .populate('commentReplys')

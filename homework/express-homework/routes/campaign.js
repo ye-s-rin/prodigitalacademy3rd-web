@@ -10,6 +10,32 @@ router.get('/campaign', function (req, res, next) {
         .catch(err => (next(err)));
 });
 
+router.post('/:campaignId/comment/:commentId', async (req, res, next) => {
+    const campaignId = req.params.campaignId;
+    const commentId = req.params.commentId;
+    const comment = req.body;
+    let recommentId;
+
+    await Comment.create({
+        body: comment.body,
+        Campaign: campaignId,
+        commentType: comment.commentType,
+        userNickname: comment.userNickname || "익명",
+        whenCreated: comment.whenCreated,
+        commentReplys: [],
+        depth: comment.depth
+    })
+        .then(data => { recommentId = data._id })
+        .catch(err => { console.log("recomment error: ", err) });
+
+    Comment.findOneAndUpdate(
+        { _id: commentId },
+        { $push: { commentReplys: recommentId } }
+    )
+        .then(data => res.json(data))
+        .catch(err => { console.log("comment error: ", err) });
+});
+
 router.post('/:campaignId/comment', (req, res, next) => {
     const campaignId = req.params.campaignId;
     const comment = req.body;
@@ -20,7 +46,7 @@ router.post('/:campaignId/comment', (req, res, next) => {
         commentType: comment.commentType,
         userNickname: comment.userNickname || "익명",
         whenCreated: comment.whenCreated,
-        commentReplys: null,
+        commentReplys: [],
         depth: comment.depth
     })
         .then(data => { res.json(data) })
